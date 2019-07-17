@@ -1,0 +1,6 @@
+<h2>Tour: <%= @tour.name %></h2>
+<%= image_tag(@tour.main_image, alt: 'Image',
+    style: 'width:50px; height:50px;border-radius:5px') if @tour.main_image? %>
+<p>Description: <%= @tour.description %></p>
+<p>Location: <%= @tour.location.name %></p>
+<p>Created: <%= @tour.updated_at %></p>

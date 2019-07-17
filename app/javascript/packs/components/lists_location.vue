@@ -21,6 +21,11 @@
     <select v-model="tour.location_id">
       <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
     </select><br>
+
+    <img v-if="tour.main_image != null" v-bind:src="tour.main_image"
+      class="uploading-image"/>
+    <input type="file" accept="image/jpeg" @change="uploadImage">
+
     <button type="button" name="button" v-on:click="sendData">Save</button>
 
   </div>
@@ -33,7 +38,8 @@ export default {
       tour: {
         name: '',
         description: '',
-        location_id: 0
+        location_id: 0,
+        main_image: null
       },
       regions: Array,
       selectedRegion: '',
@@ -42,7 +48,19 @@ export default {
     }
   },
   methods: {
+    uploadImage(e){
+        const image = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = e =>{
+            this.tour.main_image = e.target.result;
+            console.log(this.tour.main_image);
+        };
+    },
+    
     sendData: async function(){
+      console.log('TOUR:', this.tour);
+
       var self = this;
       const response = await fetch('/tours', {
         method: 'POST',
@@ -78,6 +96,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.uploading-image{
+  display:flex;
+  weight:200px;
+  height:150px
+}
 </style>

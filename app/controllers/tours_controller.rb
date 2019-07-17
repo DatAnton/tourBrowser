@@ -4,6 +4,10 @@ class ToursController < ApplicationController
     @regions = Tour.get_regions
   end
 
+  def show
+    @tour = Tour.find(params[:id])
+  end
+
   def get_regions
     @regions = Tour.get_regions
     render json: @regions
@@ -18,10 +22,8 @@ class ToursController < ApplicationController
   def create
     @tour = Tour.new(tour_params)
     if @tour.save
-      flash[:success] = 'Your tour has been created!'
       render json: @tour
     else
-      flash[:danger] = 'Check attributes!'
       render json: { errors: @tour.errors.full_messages }
     end
   end
@@ -33,6 +35,6 @@ class ToursController < ApplicationController
   private
 
   def tour_params
-    params.require(:tour).permit(:name, :description, :location_id)
+    params.require(:tour).permit(:name, :description, :location_id, :main_image)
   end
 end

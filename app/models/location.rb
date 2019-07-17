@@ -1,3 +1,3 @@
 class Location < ApplicationRecord
-  has_many :tours
+  has_many :tours, dependent: :destroy
 end
