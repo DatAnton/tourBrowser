@@ -22,9 +22,15 @@
       <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
     </select><br>
 
+    <label for="">Select main image:</label>
     <img v-if="tour.main_image != null" v-bind:src="tour.main_image"
       class="uploading-image"/>
     <input type="file" accept="image/jpeg" @change="uploadImage">
+
+    <label for="">Select other images:</label>
+    <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
+    <img v-for="imag in tour.images" v-bind:src="imag"
+      class="uploading-image"/><br>
 
     <button type="button" name="button" v-on:click="sendData">Save</button>
 
@@ -39,7 +45,8 @@ export default {
         name: '',
         description: '',
         location_id: 0,
-        main_image: null
+        main_image: null,
+        images: []
       },
       regions: Array,
       selectedRegion: '',
@@ -54,12 +61,23 @@ export default {
         reader.readAsDataURL(image);
         reader.onload = e =>{
             this.tour.main_image = e.target.result;
-            console.log(this.tour.main_image);
         };
     },
-    
+    uploadGallery(e){
+      var images = e.target.files;
+      var image;
+      for(var i = 0; i < e.target.files.length; i++)
+      {
+        const reader = new FileReader();
+        image = images[i];
+        reader.readAsDataURL(image);
+        reader.onload = e =>{
+          this.tour.images.push(e.target.result);
+        };
+      }
+
+    },
     sendData: async function(){
-      console.log('TOUR:', this.tour);
 
       var self = this;
       const response = await fetch('/tours', {
@@ -102,4 +120,5 @@ export default {
   weight:200px;
   height:150px
 }
+
 </style>

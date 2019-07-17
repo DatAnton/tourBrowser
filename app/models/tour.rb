@@ -1,7 +1,9 @@
 class Tour < ApplicationRecord
   belongs_to :location
+  has_many :images
+  has_one :image
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :description, presence: true
   validates :location_id, presence: true
 

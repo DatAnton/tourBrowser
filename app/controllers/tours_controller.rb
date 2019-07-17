@@ -21,12 +21,23 @@ class ToursController < ApplicationController
 
   def create
     @tour = Tour.new(tour_params)
+
     if @tour.save
+      @images = params[:images]
+      @images.each do |img|
+        im = Image.new(image: img, tour_id: @tour.id)
+        im.save
+      end
+      @main_image = Image.new(image: params[:main_image], tour_id: @tour.id)
+      @main_image.save
+      @tour.update_attribute(:image_id, @main_image.id)
+
       render json: @tour
     else
       render json: { errors: @tour.errors.full_messages }
     end
   end
+
 
   def index
     @tours = Tour.all
@@ -35,6 +46,6 @@ class ToursController < ApplicationController
   private
 
   def tour_params
-    params.require(:tour).permit(:name, :description, :location_id, :main_image)
+    params.require(:tour).permit(:name, :description, :location_id)
   end
 end
