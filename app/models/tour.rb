@@ -1,7 +1,10 @@
 class Tour < ApplicationRecord
   belongs_to :location
-  has_many :images
-  has_one :image
+  belongs_to :user
+  has_many :images, dependent: :destroy
+  has_one :image, dependent: :destroy
+
+  has_many :comments, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true

@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_203551) do
+ActiveRecord::Schema.define(version: 2019_07_18_104744) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
     t.string "region"
     t.float "lat"
     t.float "lng"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "body"
+    t.integer "tour_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,6 +53,8 @@ ActiveRecord::Schema.define(version: 2019_07_17_203551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "image_id"
+    t.boolean "is_private", default: false
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -58,7 +68,7 @@ ActiveRecord::Schema.define(version: 2019_07_17_203551) do
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
-    t.text "image"
+    t.text "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

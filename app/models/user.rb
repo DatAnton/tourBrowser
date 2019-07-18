@@ -6,6 +6,11 @@ class User < ApplicationRecord
 
   devise :omniauthable, :omniauth_providers => [:facebook]
 
+  has_many :tours, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
+  mount_uploader :avatar, AvatarUploader
+
   def self.new_with_session(params, session)
     super.tap do |user|
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]

@@ -26,6 +26,12 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# uploading avatar
+gem 'carrierwave'
+
+# for serializer
+gem 'active_model_serializers'
+
 # for Vue js
 gem 'webpacker'
 gem 'foreman'

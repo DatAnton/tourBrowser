@@ -6,16 +6,21 @@
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
 import Vue from 'vue/dist/vue.esm.js';
+import TurbolinksAdapter from 'vue-turbolinks'
+
 import App from './components/app.vue'
 import ListsLocation from './components/lists_location.vue'
+import AddingComment from './components/adding_comment.vue'
 
-document.addEventListener('DOMContentLoaded', () => {
+Vue.use(TurbolinksAdapter)
+
+document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     el: '#root',
     data: {
       message: "Can you say hello?"
     },
-    components: { App, ListsLocation }
+    components: { App, ListsLocation, AddingComment }
   })
 })
 

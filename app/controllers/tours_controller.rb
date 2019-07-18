@@ -1,4 +1,6 @@
 class ToursController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def new
     @tour = Tour.new
     @regions = Tour.get_regions
@@ -21,6 +23,10 @@ class ToursController < ApplicationController
 
   def create
     @tour = Tour.new(tour_params)
+    @user = current_user
+    puts ">>>>"
+    puts @user
+    @tour.user_id = current_user.id
 
     if @tour.save
       @images = params[:images]
@@ -46,6 +52,6 @@ class ToursController < ApplicationController
   private
 
   def tour_params
-    params.require(:tour).permit(:name, :description, :location_id)
+    params.require(:tour).permit(:name, :description, :location_id, :is_private)
   end
 end

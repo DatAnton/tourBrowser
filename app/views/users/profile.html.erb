@@ -1,2 +1,7 @@
 <h2>Profile</h2>
 <p><%= @user.username %></p>
+<%= image_tag @user.avatar.url, alt: 'avatar', style: 'weight:200px;height:200px'%><br>
+<%= link_to 'Create Tour', new_tour_path %>
+
+
+<p><%= link_to 'Log out', destroy_user_session_path, :method => :delete %></p>

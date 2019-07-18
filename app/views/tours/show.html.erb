@@ -4,9 +4,14 @@
 <img src="<%= @tour.image %>" alt="">
 <p>Description: <%= @tour.description %></p>
 <p>Location: <%= @tour.location.name %></p>
+<p>Private: <%= @tour.is_private %></p>
+<p>Author: <%= @tour.user.username %></p>
 <p>Created: <%= @tour.updated_at %></p>
 <h4>Photos:</h4>
 <% @tour.images.each do |imag| %>
 <%= image_tag(imag.image, alt: 'Image',
     style: 'width:100px; height:100px;border-radius:5px') %>
 <% end %>
+
+<h5>Add your comment: </h5>
+<adding-comment :in_tour_id="<%= @tour.id %>"></adding-comment>

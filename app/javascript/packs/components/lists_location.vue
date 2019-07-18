@@ -22,6 +22,10 @@
       <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
     </select><br>
 
+    <input type="checkbox" v-model="tour.is_private">
+    <label for="horns">private?</label><br>
+
+
     <label for="">Select main image:</label>
     <img v-if="tour.main_image != null" v-bind:src="tour.main_image"
       class="uploading-image"/>
@@ -46,6 +50,7 @@ export default {
         description: '',
         location_id: 0,
         main_image: null,
+        is_private: false,
         images: []
       },
       regions: Array,
@@ -78,7 +83,6 @@ export default {
 
     },
     sendData: async function(){
-
       var self = this;
       const response = await fetch('/tours', {
         method: 'POST',
@@ -93,8 +97,7 @@ export default {
         self.errors = result.errors;
       }
       else {
-        // change to tour_index
-        window.location.href = '/users/profile';
+        window.location.href = '/tours';
       }
     }
   },
