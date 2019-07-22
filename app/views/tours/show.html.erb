@@ -2,6 +2,12 @@
 <%= image_tag(@tour.image.image, alt: 'Image',
     style: 'height:150px;border-radius:5px') if @tour.image_id? %>
 <img src="<%= @tour.image %>" alt="">
+<br>
+<saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= @tour.id %>"
+  :is_saved="<%= is_saved?(@tour) %>"></saving-tour>
+
+<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" } if current_user.id == @tour.creator_id %>
+
 <p>Description: <%= @tour.description %></p>
 <p>Location: <%= @tour.location.name %></p>
 <p>Link to map: <%= link_to @tour.location.name,
