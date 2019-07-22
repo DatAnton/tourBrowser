@@ -25,3 +25,5 @@
 
 <h5>Add your comment: </h5>
 <adding-comment :in_tour_id="<%= @tour.id %>"></adding-comment>
+
+<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" } if current_user.id == @tour.creator_id %>

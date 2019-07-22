@@ -6,7 +6,7 @@ class Tour < ApplicationRecord
 
   scope :creator, ->(user_id) { User.find(user_id) }
 
-  has_many :tours_and_user
+  has_many :tours_and_user, dependent: :destroy
   has_many :users, through: :tours_and_user
   has_many :comments, dependent: :destroy
 

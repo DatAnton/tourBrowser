@@ -2,7 +2,6 @@ require 'uri'
 require 'net/http'
 require 'json'
 
-
 class ToursController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -33,6 +32,12 @@ class ToursController < ApplicationController
     @region = params[:region]
     @locations = Location.all.where(region: @region)
     render json: @locations
+  end
+
+  def destroy
+    @tour = Tour.find params[:id]
+    @tour.destroy
+    redirect_to tours_path
   end
 
   def create
