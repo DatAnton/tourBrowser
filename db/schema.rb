@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_18_104744) do
+ActiveRecord::Schema.define(version: 2019_07_21_200615) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -54,7 +54,14 @@ ActiveRecord::Schema.define(version: 2019_07_18_104744) do
     t.datetime "updated_at", null: false
     t.integer "image_id"
     t.boolean "is_private", default: false
+    t.integer "creator_id"
+  end
+
+  create_table "tours_and_users", force: :cascade do |t|
+    t.integer "tour_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

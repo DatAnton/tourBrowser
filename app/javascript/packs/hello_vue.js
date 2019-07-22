@@ -9,8 +9,9 @@ import Vue from 'vue/dist/vue.esm.js';
 import TurbolinksAdapter from 'vue-turbolinks'
 
 import App from './components/app.vue'
-import ListsLocation from './components/lists_location.vue'
+import FormNewTour from './components/form_new_tour.vue'
 import AddingComment from './components/adding_comment.vue'
+import SavingTour from './components/saving_tour.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -20,7 +21,7 @@ document.addEventListener('turbolinks:load', () => {
     data: {
       message: "Can you say hello?"
     },
-    components: { App, ListsLocation, AddingComment }
+    components: { App, FormNewTour, AddingComment, SavingTour }
   })
 })
 

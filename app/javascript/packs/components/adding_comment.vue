@@ -22,14 +22,6 @@ export default {
     }
   },
   methods: {
-    getUser: async function(user_id){
-      const response = await fetch(`/users/${user_id}.json`);
-      const user = await response.json();
-      // var username = user.username;
-      // console.log(username);
-      // return username;
-      return user.username;
-    },
     addComment: async function(){
       var self = this;
       this.comment.tour_id = this.in_tour_id;
@@ -47,7 +39,6 @@ export default {
       }
       else {
         self.comment.body = '';
-        // self.comments.push(self.comment);
         self.getAllComments();
       }
     },

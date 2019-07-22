@@ -6,8 +6,11 @@ class User < ApplicationRecord
 
   devise :omniauthable, :omniauth_providers => [:facebook]
 
-  has_many :tours, dependent: :destroy
+  has_many :tours_and_user
+  has_many :tours, through: :tours_and_user
   has_many :comments, dependent: :destroy
+
+  scope :created_tours, -> (user_id){ Tour.where(creator_id: user_id) }
 
   mount_uploader :avatar, AvatarUploader
 

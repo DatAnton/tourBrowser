@@ -1,16 +1,26 @@
 <h2>Tour: <%= @tour.name %></h2>
 <%= image_tag(@tour.image.image, alt: 'Image',
-    style: 'width:150px; height:150px;border-radius:5px') if @tour.image_id? %>
+    style: 'height:150px;border-radius:5px') if @tour.image_id? %>
 <img src="<%= @tour.image %>" alt="">
 <p>Description: <%= @tour.description %></p>
 <p>Location: <%= @tour.location.name %></p>
+<p>Link to map: <%= link_to @tour.location.name,
+  "https://www.google.com.ua/maps/place/#{@tour.location.name}", target: :_blank %></p>
+
+<hr>
+<h4>WEATHER</h4>
+<p>temperature: <%= @weather['temperature'] %></p>
+<p>clouds: <%= @weather['clouds'] %></p>
+<p>humidity: <%= @weather['humidity'] %></p>
+
+<hr>
 <p>Private: <%= @tour.is_private %></p>
-<p>Author: <%= @tour.user.username %></p>
+<p>Author: <%= Tour.creator(@tour.creator_id).username %></p>
 <p>Created: <%= @tour.updated_at %></p>
 <h4>Photos:</h4>
 <% @tour.images.each do |imag| %>
 <%= image_tag(imag.image, alt: 'Image',
-    style: 'width:100px; height:100px;border-radius:5px') %>
+    style: 'height:100px;border-radius:5px') %>
 <% end %>
 
 <h5>Add your comment: </h5>

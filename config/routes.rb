@@ -11,4 +11,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  delete 'tours_and_users/delete', to: 'tours_and_users#delete'
+  resources :tours_and_users, only: [:create, :index]
+
 end

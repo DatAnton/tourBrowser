@@ -1,9 +1,13 @@
 class Tour < ApplicationRecord
   belongs_to :location
-  belongs_to :user
+
   has_many :images, dependent: :destroy
   has_one :image, dependent: :destroy
 
+  scope :creator, ->(user_id) { User.find(user_id) }
+
+  has_many :tours_and_user
+  has_many :users, through: :tours_and_user
   has_many :comments, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true

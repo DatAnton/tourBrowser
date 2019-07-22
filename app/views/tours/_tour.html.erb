@@ -1,0 +1,11 @@
+<hr>
+<div class="">
+  <%= image_tag(tour.image.image, alt: 'Image',
+      style: 'height:50px;border-radius:5px') if tour.image_id? %>
+  <h6><%= tour.name %></h6>
+  <p>id: <%= tour.id %></p>
+  <p>by: <%= Tour.creator(tour.creator_id).username %></p>
+  <saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= tour.id %>"
+    :is_saved="<%= is_saved?(tour) %>"></saving-tour>
+</div>
+<hr>
