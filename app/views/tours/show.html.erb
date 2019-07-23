@@ -1,12 +1,10 @@
 <h2>Tour: <%= @tour.name %></h2>
-<%= image_tag(@tour.image.image, alt: 'Image',
+<%= link_to 'edit tour', edit_tour_path(@tour) if current_user.id == @tour.creator_id %><br>
+<%= image_tag(Tour.main_image(@tour.image_id).image, alt: 'Image',
     style: 'height:150px;border-radius:5px') if @tour.image_id? %>
-<img src="<%= @tour.image %>" alt="">
 <br>
 <saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= @tour.id %>"
   :is_saved="<%= is_saved?(@tour) %>"></saving-tour>
-
-<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" } if current_user.id == @tour.creator_id %>
 
 <p>Description: <%= @tour.description %></p>
 <p>Location: <%= @tour.location.name %></p>
@@ -31,5 +29,3 @@
 
 <h5>Add your comment: </h5>
 <adding-comment :in_tour_id="<%= @tour.id %>"></adding-comment>
-
-<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" } if current_user.id == @tour.creator_id %>

@@ -1,0 +1,174 @@
+<template>
+  <div>
+    <div class="alert alert-warning" role="alert" v-for="error in errors">
+      {{ error }}
+    </div>
+
+
+    <label for="">Name</label><br>
+    <input type="text" v-model="tour.name" placeholder="What is name?">
+    <br>
+    <textarea v-model="tour.description" placeholder="What you will see?">
+    </textarea><br>
+
+    <label for="">Select location</label><br>
+    <label for="">Region</label><br>
+    <select v-model="selectedRegion">
+      <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
+    </select>
+    <br>
+    <label for="">Location</label>
+    <select v-model="tour.location_id">
+      <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
+    </select><br>
+
+    <input type="checkbox" v-model="tour.is_private">
+    <label for="horns">private?</label><br>
+
+
+    <label for="">Choose main image:</label>
+    <br>
+    <img v-if="tour.main_image != null && tour.main_image.id != 0" v-bind:src="tour.main_image.image"
+      class="uploading-image" style="border: double yellow 3px;"/>
+    <img v-else="tour.main_image != null" v-bind:src="tour.main_image.image"
+      class="uploading-image" />
+    <p>{{ tour.main_image.id }}</p>
+    <input type="file" accept="image/jpeg" @change="uploadImage">
+    <h4>Gallery:</h4>
+    <div class="" v-for="imag in tour.images">
+      <img v-if="imag.id != 0" v-bind:src="imag.image" class="uploading-image" style="border: double yellow 3px;"/>
+      <img v-else v-bind:src="imag.image" class="uploading-image" />
+      <button type="button" name="button" @click="deleteImage(imag)">delete</button>
+      <br>
+    </div>
+    <label for="">Select images:</label>
+    <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
+
+    <button type="button" name="button" v-on:click="sendData">Save</button>
+
+  </div>
+</template>
+
+<script>
+// image is object, not string
+export default {
+  props: {
+    tour_in: {
+      type: Object,
+      required: true
+    },
+    location_in: {
+      type: Object,
+      required: true
+    },
+    main_image_in: {
+      type: Object,
+      required: true
+    },
+    images_in: {
+      type: Array,
+      required: true
+    }
+  },
+  data: function () {
+    return {
+      tour: {
+        id: this.tour_in.id,
+        name: this.tour_in.name,
+        description: this.tour_in.description,
+        location_id: this.tour_in.location_id,
+        main_image: this.main_image_in,
+        is_private: this.tour_in.is_private,
+        images: []
+      },
+      regions: Array,
+      selectedRegion: '',
+      locations: Array,
+      errors: Array
+    }
+  },
+  methods: {
+    deleteImage: async function(img){
+      this.tour.images = this.tour.images.filter(function(item) {
+        return item !== img
+      });
+      if (img.id != 0) {
+        var self = this;
+        const response = await fetch(`/tours/${this.tour.id}/images/${img.id}`, {
+          method: 'DELETE',
+          body: JSON.stringify({ id: img.id, tour_id: self.tour.id }),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        });
+        const res = await response.json();
+        self.tour.main_image = res;
+      }
+    },
+    uploadImage(e){
+        const image = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = e =>{
+            this.tour.main_image = { id: 0, image: e.target.result };
+        };
+    },
+    uploadGallery(e){
+      var images = e.target.files;
+      var image;
+      for(var i = 0; i < e.target.files.length; i++)
+      {
+        const reader = new FileReader();
+        image = images[i];
+        reader.readAsDataURL(image);
+        reader.onload = e =>{
+          this.tour.images.push({ id: 0, image: e.target.result });
+        };
+      }
+
+    },
+    sendData: async function(){
+      var self = this;
+      const response = await fetch(`/tours/${this.tour.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(self.tour),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await response.json();
+      if(result.errors){
+        self.errors = result.errors;
+      }
+      else {
+        window.location.href = '/tours';
+      }
+    }
+  },
+  mounted: async function() {
+    const response = await fetch('/tours/get_regions');
+    const regins = await response.json();
+    this.regions = regins;
+    this.selectedRegion = this.location_in.region;
+
+    this.tour.images = this.images_in;
+  },
+  watch: {
+    selectedRegion: async function(){
+      const response = await
+        fetch(`/tours/get_locations_by_region?region=${this.selectedRegion}`);
+      const locatins = await response.json();
+      this.locations = locatins;
+    }
+  }
+}
+</script>
+
+<style>
+.uploading-image{
+  display:inline;
+  weight:200px;
+  height:150px
+}
+
+</style>

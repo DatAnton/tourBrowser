@@ -1,6 +1,6 @@
 <hr>
 <div class="">
-  <%= image_tag(tour.image.image, alt: 'Image',
+  <%= image_tag(Tour.main_image(tour.image_id).image, alt: 'Image',
       style: 'height:50px;border-radius:5px') if tour.image_id? %>
   <h6><%= link_to tour.name, tour %></h6>
   <p>id: <%= tour.id %></p>

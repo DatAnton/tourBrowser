@@ -3,8 +3,6 @@ require 'net/http'
 require 'json'
 
 class ToursController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def new
     @tour = Tour.new
     @regions = Tour.get_regions
@@ -56,8 +54,7 @@ class ToursController < ApplicationController
 
       @images = params[:images]
       @images.each do |img|
-        im = Image.new(image: img, tour_id: @tour.id)
-        im.save
+        Image.create(image: img, tour_id: @tour.id)
       end
       render json: @tour
     else
@@ -65,9 +62,29 @@ class ToursController < ApplicationController
     end
   end
 
+  def update
+    @tour = Tour.find params[:id]
+    if @tour.update_attributes(tour_params)
+      @main_image = params[:main_image]
+      if @main_image[:id] == 0
+        Tour.main_image(@tour.image_id).destroy
+        @tour.update_attribute(:image_id, (Image.create(image: @main_image[:image], tour_id: @tour.id)).id)
+      end
+
+      @images = params[:images]
+      @images.each do |img|
+        if img[:id] == 0
+          Image.create(image: img[:image], tour_id: @tour.id)
+        end
+      end
+      render json: @tour
+    else
+      render json: { errors: @tour.errors.full_messages }
+    end
+  end
 
   def index
-    @tours = Tour.all
+    @tours = Tour.all.where(is_private: false)
   end
 
   private

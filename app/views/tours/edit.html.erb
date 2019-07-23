@@ -1,2 +1,7 @@
 <h2>Tour <%= @tour.name %></h2>
-<form-new-tour></form-new-tour>
+<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" } if current_user.id == @tour.creator_id %>
+<form-edit-tour :tour_in="<%= @tour.to_json %>"
+  :location_in="<%= @tour.location.to_json %>"
+  :main_image_in="<%= Tour.main_image(@tour.image_id).to_json %>"
+  :images_in="<%= make_gallery(@tour.images, @tour.image_id).to_json %>"
+  ></form-edit-tour>

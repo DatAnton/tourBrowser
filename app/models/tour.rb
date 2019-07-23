@@ -2,9 +2,9 @@ class Tour < ApplicationRecord
   belongs_to :location
 
   has_many :images, dependent: :destroy
-  has_one :image, dependent: :destroy
 
   scope :creator, ->(user_id) { User.find(user_id) }
+  scope :main_image, -> (image_id){ Image.find(image_id) }
 
   has_many :tours_and_user, dependent: :destroy
   has_many :users, through: :tours_and_user

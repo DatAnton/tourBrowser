@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :tours do
     resources :comments
+    resources :images, only: [:destroy]
   end
 
   delete 'tours_and_users/delete', to: 'tours_and_users#delete'

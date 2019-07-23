@@ -1,5 +1,4 @@
 class ToursAndUsersController < ApplicationController
-  skip_before_action :verify_authenticity_token
   def create
     @relation = ToursAndUser.new(tours_and_user_params)
     @relation.save

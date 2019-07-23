@@ -10,6 +10,7 @@ import TurbolinksAdapter from 'vue-turbolinks'
 
 import App from './components/app.vue'
 import FormNewTour from './components/form_new_tour.vue'
+import FormEditTour from './components/form_edit_tour.vue'
 import AddingComment from './components/adding_comment.vue'
 import SavingTour from './components/saving_tour.vue'
 
@@ -21,7 +22,7 @@ document.addEventListener('turbolinks:load', () => {
     data: {
       message: "Can you say hello?"
     },
-    components: { App, FormNewTour, AddingComment, SavingTour }
+    components: { App, FormNewTour, FormEditTour, AddingComment, SavingTour }
   })
 })
 

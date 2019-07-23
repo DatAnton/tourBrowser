@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  skip_before_action :verify_authenticity_token
 
   def index
     @tour = Tour.find(params[:tour_id])

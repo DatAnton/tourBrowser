@@ -26,7 +26,7 @@
     <label for="horns">private?</label><br>
 
 
-    <label for="">Select main image:</label>
+    <label for="">Choose main image:</label>
     <br>
     <img v-if="tour.main_image != null" v-bind:src="tour.main_image"
       class="uploading-image"/>
@@ -41,7 +41,7 @@
     <label for="">Select images:</label>
     <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
 
-    <button type="button" name="button" v-on:click="sendData">Save</button>
+    <button type="button" name="button" v-on:click="sendData">Create</button>
 
   </div>
 </template>
