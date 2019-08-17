@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="d-flex align-items-center" v-if="saving">
+      <strong>Saving...</strong>&nbsp;&nbsp;&nbsp;
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
     <div class="alert alert-warning" role="alert" v-for="error in errors">
       {{ error }}
     </div>
@@ -41,7 +48,7 @@
     <label for="">Select images:</label>
     <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
 
-    <button type="button" name="button" v-on:click="sendData">Create</button>
+    <button type="button" name="button" v-on:click="sendData" v-bind:disabled="saving">Create</button>
 
   </div>
 </template>
@@ -61,7 +68,8 @@ export default {
       regions: Array,
       selectedRegion: '',
       locations: Array,
-      errors: Array
+      errors: Array,
+      saving: false
     }
   },
   methods: {
@@ -94,6 +102,7 @@ export default {
     },
     sendData: async function(){
       var self = this;
+      this.saving = true;
       const response = await fetch('/tours', {
         method: 'POST',
         body: JSON.stringify(self.tour),
@@ -105,6 +114,7 @@ export default {
       const result = await response.json();
       if(result.errors){
         self.errors = result.errors;
+        this.saving = false;
       }
       else {
         window.location.href = '/tours';

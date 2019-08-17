@@ -26,6 +26,11 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# paginate
+gem 'will_paginate'
+# style paginate
+gem 'will_paginate-bootstrap'
+
 # uploading avatar
 gem 'carrierwave'
 

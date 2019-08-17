@@ -1,4 +1,30 @@
+<%= link_to '<- Tours', tours_path %>
 <h2>Tour: <%= @tour.name %></h2>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <% @tour.images.each do |imag| %>
+    <% if @tour.images.index(imag) == 0 %>
+      <div class="carousel-item active">
+        <%= image_tag(@tour.images.first.image, alt: 'Image',
+        class: "d-block w-100") %>
+      </div>
+    <% else %>
+    <div class="carousel-item">
+      <%= image_tag(imag.image, alt: 'Image',
+      class: "d-block w-100") %>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 <%= link_to 'edit tour', edit_tour_path(@tour) if current_user.id == @tour.creator_id %><br>
 <%= image_tag(Tour.main_image(@tour.image_id).image, alt: 'Image',
     style: 'height:150px;border-radius:5px') if @tour.image_id? %>
@@ -8,6 +34,7 @@
 
 <p>Description: <%= @tour.description %></p>
 <p>Location: <%= @tour.location.name %></p>
+<p>Number of savings: <%= @num_of_savings %></p>
 <p>Link to map: <%= link_to @tour.location.name,
   "https://www.google.com.ua/maps/place/#{@tour.location.name}", target: :_blank %></p>
 
@@ -19,7 +46,10 @@
 
 <hr>
 <p>Private: <%= @tour.is_private %></p>
-<p>Author: <%= Tour.creator(@tour.creator_id).username %></p>
+<% result_creator = creator_exists(@tour.creator_id) %>
+<% if result_creator %>
+<p>Author: <%= link_to result_creator.username, user_show_path(result_creator) %></p>
+<% end %>
 <p>Created: <%= @tour.updated_at %></p>
 <h4>Photos:</h4>
 <% @tour.images.each do |imag| %>

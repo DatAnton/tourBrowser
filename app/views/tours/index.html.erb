@@ -1,2 +1,23 @@
-<h2>tours</h2>
-<%= render @tours %>
+<h2 class="text text-center"><u>All</u> tours</h2>
+<div class="">
+  <% if @location_filter %>
+    <filter-tours :sort_in="<%= @sorting_filter %>" :location_in="<%= @location_filter.id %>"
+      :region_in="'<%= @location_filter.region %>'"></filter-tours>
+  <% else %>
+    <filter-tours :sort_in="<%= @sorting_filter %>"></filter-tours>
+  <% end %>
+</div>
+
+<div class="card-columns">
+  <%= render @tours %>
+</div>
+
+<% if @tours.length == 0 %>
+<div class="alert alert-warning" role="alert">
+Not founded any tour.
+</div>
+<% end %>
+
+<div class="text-center">
+  <%= will_paginate @tours, renderer: BootstrapPagination::Rails %>
+</div>

@@ -9,6 +9,11 @@ class User < ApplicationRecord
   has_many :tours_and_user, dependent: :destroy
   has_many :tours, through: :tours_and_user
   has_many :comments, dependent: :destroy
+  has_many :plans, dependent: :destroy
+  has_many :hotels, dependent: :destroy
+
+  validates :username, presence: true
+  validates :avatar, presence: true
 
   scope :created_tours, -> (user_id){ Tour.where(creator_id: user_id) }
 

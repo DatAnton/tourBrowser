@@ -1,0 +1,11 @@
+<h2 class="text-center">Your plans</h2>
+
+  <ul class="list-group">
+    <% @plans.each do |plan| %>
+      <li class="list-group-item text-center">
+        <%= link_to plan.name, plan %>
+        <span class="badge badge-primary badge-pill"><%= plan.plan_points.length %></span>
+      </li>
+    <% end %>
+  </ul>
+<new-plan-modal></new-plan-modal>

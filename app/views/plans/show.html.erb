@@ -1,0 +1,39 @@
+<%= link_to '<- Plans', plans_path, class: 'btn btn-light' %>
+
+<edit-plan :plan_in_id="<%= @plan.id %>" :plan_in_name="'<%= @plan.name %>'"></edit-plan>
+
+<% if @plan.plan_points.empty? %>
+  <h4 class="text text-center text-warning">You don't have any points. Add them!</h4>
+<% else %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Tour</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time from</th>
+        <th scope="col">Time to</th>
+        <th scope="col">Location</th>
+        <th scope="col">Act</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @plan.plan_points.each do |pp| %>
+      <tr>
+        <th scope="row"><img src="<%= Tour.main_image(pp.tour.image_id).image %>" alt="" style="height:100px"></th>
+          <td><h4><%= link_to pp.tour.name, pp.tour %></h4></td>
+          <td><%= pp.day_date.to_date %></td>
+          <td><%= pp.from_time.to_s(:time) %></td>
+          <td><%= pp.to_time.to_s(:time) %></td>
+          <td><%= pp.tour.location.name %>, <%= pp.tour.location.region %></td>
+          <td><%= link_to 'remove', plan_plan_point_path(@plan, pp), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger' %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<div class="text text-center">
+  <%= link_to '+', new_plan_plan_point_path(@plan), class: "btn btn-primary btn-lg btn-block" %>
+</div>

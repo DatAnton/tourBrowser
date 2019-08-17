@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_21_200615) do
+ActiveRecord::Schema.define(version: 2019_08_13_070011) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 2019_07_21_200615) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "hotels", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "image"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "image"
     t.integer "tour_id"
@@ -41,6 +50,23 @@ ActiveRecord::Schema.define(version: 2019_07_21_200615) do
     t.string "region"
     t.float "lat"
     t.float "lng"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "plan_points", force: :cascade do |t|
+    t.integer "plan_id"
+    t.integer "tour_id"
+    t.time "from_time"
+    t.time "to_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "day_date"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -76,6 +102,9 @@ ActiveRecord::Schema.define(version: 2019_07_21_200615) do
     t.string "provider"
     t.string "uid"
     t.text "avatar"
+    t.string "description"
+    t.boolean "admin", default: false
+    t.integer "count_of_hotels", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

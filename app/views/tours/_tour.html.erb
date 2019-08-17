@@ -1,11 +1,30 @@
-<hr>
-<div class="">
-  <%= image_tag(Tour.main_image(tour.image_id).image, alt: 'Image',
-      style: 'height:50px;border-radius:5px') if tour.image_id? %>
-  <h6><%= link_to tour.name, tour %></h6>
-  <p>id: <%= tour.id %></p>
-  <p>by: <%= Tour.creator(tour.creator_id).username %></p>
-  <saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= tour.id %>"
-    :is_saved="<%= is_saved?(tour) %>"></saving-tour>
+<div class="card">
+  <%= image_tag(Tour.main_image(tour.image_id).image, alt: 'Image', class: 'card-img-top') if tour.image_id? %>
+  <div class="card-body">
+    <h3 class="card-title"><%= link_to tour.name, tour %></h3>
+    <div class="card-text">
+      <i>Location:</i> <u><%= tour.location.name %>, <%= tour.location.region %></u><br>
+      <% if controller.controller_name == 'users' && controller.action_name == 'profile' %>
+        <% if tour.is_private %>
+          <h5 class="text-danger">Private</h5>
+        <% else %>
+          <h5 class="text-success">Public</h5>
+        <% end %>
+      <% end %>
+      <br>
+      <saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= tour.id %>"
+        :is_saved="<%= is_saved?(tour) %>"></saving-tour>
+
+    </div>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">Last updated <%= ((Time.now - tour.updated_at) / 24.hours).to_i %> days ago</small>
+    <% result_creator = creator_exists(tour.creator_id) %>
+    <% if result_creator %>
+    <p style="float:right">
+        by: <%= link_to result_creator.username, user_show_path(result_creator) %>
+    </p>
+    <% end %>
+
+  </div>
 </div>
-<hr>

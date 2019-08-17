@@ -15,6 +15,7 @@ class ToursController < ApplicationController
     uri.query = URI.encode_www_form(params)
     res = Net::HTTP.get_response(uri)
     @weather = JSON.parse(res.body)['weatherObservation']
+    @num_of_savings = @tour.users.length
   end
 
   def edit
@@ -30,6 +31,10 @@ class ToursController < ApplicationController
     @region = params[:region]
     @locations = Location.all.where(region: @region)
     render json: @locations
+  end
+
+  def saved_tours
+    @user_tours = current_user.tours
   end
 
   def destroy
@@ -50,7 +55,6 @@ class ToursController < ApplicationController
       @main_image = Image.new(image: params[:main_image], tour_id: @tour.id)
       @main_image.save
       @tour.update_attribute(:image_id, @main_image.id)
-
 
       @images = params[:images]
       @images.each do |img|
@@ -84,10 +88,37 @@ class ToursController < ApplicationController
   end
 
   def index
-    @tours = Tour.all.where(is_private: false)
+    @sorting_filter = true? params[:sort_by_savings]
+    @location_filter = Location.all.where(id: params[:location_id]).first
+
+    find_hash = Hash.new
+    find_hash[:is_private] = false
+    find_hash[:location_id] = @location_filter.id if @location_filter
+
+    @tours = Tour.all.where(find_hash)
+
+    if @sorting_filter
+      @tours = @tours.sort_by { |t| t.users.length }
+      @tours.reverse!
+    end
+    @tours = @tours.paginate(page: params[:page], per_page: 6)
+    
+  end
+
+  def sorting_by_savings
+    @sorted_tours = Tour.all.where(is_private: false).sort_by { |t| t.users.length }
+    @sorted_tours.reverse!
   end
 
   private
+
+  def true?(obj)
+    obj.to_s.downcase == 'true'
+  end
+
+  def get_num_of_savings(tour_id)
+    ToursAndUser.all.where(tour_id: tour_id).length
+  end
 
   def tour_params
     params.require(:tour).permit(:name, :description, :location_id, :is_private)

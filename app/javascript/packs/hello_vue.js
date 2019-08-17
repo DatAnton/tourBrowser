@@ -11,8 +11,12 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import App from './components/app.vue'
 import FormNewTour from './components/form_new_tour.vue'
 import FormEditTour from './components/form_edit_tour.vue'
+import FormNewPlanPoint from './components/form_new_plan_point.vue'
 import AddingComment from './components/adding_comment.vue'
 import SavingTour from './components/saving_tour.vue'
+import FilterTours from './components/filter_tours.vue'
+import NewPlanModal from './components/new_plan_modal.vue'
+import EditPlan from './components/edit_plan.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -22,7 +26,8 @@ document.addEventListener('turbolinks:load', () => {
     data: {
       message: "Can you say hello?"
     },
-    components: { App, FormNewTour, FormEditTour, AddingComment, SavingTour }
+    components: { App, FormNewTour, FormEditTour, AddingComment, SavingTour,
+      FormNewPlanPoint, FilterTours, NewPlanModal, EditPlan }
   })
 })
 

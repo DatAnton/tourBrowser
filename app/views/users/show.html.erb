@@ -1,2 +1,14 @@
 <h2>User</h2>
 <p><%= @user.username %></p>
+<p><%= @user.email %></p>
+<%= image_tag @user.avatar.url, alt: 'avatar', style: 'weight:200px;height:200px'%><br>
+<p class="font-italic"><%= @user.description %></p>
+<h4>Statistics:</h4>
+<p>Number of tours: <%= @user_tours.length %></p>
+<hr>
+
+<h2 class="text text-center"><%= @user.username %>s' tours</h2>
+<div class="card-columns">
+  <%= render @user_tours %>
+</div>
+</div>

@@ -4,6 +4,12 @@
       {{ error }}
     </div>
 
+    <div class="d-flex align-items-center" v-if="saving">
+      <strong>Saving...</strong>&nbsp;&nbsp;&nbsp;
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
 
     <label for="">Name</label><br>
     <input type="text" v-model="tour.name" placeholder="What is name?">
@@ -32,7 +38,6 @@
       class="uploading-image" style="border: double yellow 3px;"/>
     <img v-else="tour.main_image != null" v-bind:src="tour.main_image.image"
       class="uploading-image" />
-    <p>{{ tour.main_image.id }}</p>
     <input type="file" accept="image/jpeg" @change="uploadImage">
     <h4>Gallery:</h4>
     <div class="" v-for="imag in tour.images">
@@ -44,7 +49,7 @@
     <label for="">Select images:</label>
     <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
 
-    <button type="button" name="button" v-on:click="sendData">Save</button>
+    <button type="button" name="button" v-on:click="sendData" v-bind:disabled="saving">Save</button>
 
   </div>
 </template>
@@ -84,7 +89,8 @@ export default {
       regions: Array,
       selectedRegion: '',
       locations: Array,
-      errors: Array
+      errors: Array,
+      saving: false
     }
   },
   methods: {
@@ -129,6 +135,7 @@ export default {
     },
     sendData: async function(){
       var self = this;
+      this.saving = true;
       const response = await fetch(`/tours/${this.tour.id}`, {
         method: 'PUT',
         body: JSON.stringify(self.tour),
@@ -139,6 +146,7 @@ export default {
       const result = await response.json();
       if(result.errors){
         self.errors = result.errors;
+        self.saving = false;
       }
       else {
         window.location.href = '/tours';
