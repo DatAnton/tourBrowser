@@ -1,19 +1,26 @@
+<div class="jumbotron">
+  <h1 class="display-4">Привет, друг!</h1>
+  <p class="lead">Это приложение создано для планировки поездок по Украине.</p>
+  <hr class="my-4">
+  <p>Ты можешь начать роботу как только войдеш или зарегистрируешся!</p>
+</div>
+
 <h2 class="text text-center">Log in</h2>
 
 <div class="d-flex justify-content-center">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="form-group">
       <%= f.label :email %><br />
-      <%= f.email_field :email, class: "form-control", id: "exampleInputEmail1", placeholder: "Enter email", autofocus: true, autocomplete: "email" %>
+      <%= f.email_field :email, class: "form-control", id: "exampleInputEmail1", placeholder: "Enter email", autofocus: true, autocomplete: "email", style: "width:200px" %>
     </div>
 
     <div class="form-group">
       <%= f.label :password %><br />
-      <%= f.password_field :password, class:"form-control", id: "exampleInputPassword1", placeholder: "Password", autocomplete: "current-password" %>
+      <%= f.password_field :password, class:"form-control", id: "exampleInputPassword1", placeholder: "Password", autocomplete: "current-password", style: "width:200px" %>
     </div>
 
     <div class="actions">
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+      <%= f.submit "Log in", class: "btn btn-primary", style: 'margin: 0 0 10px 0' %>
     </div>
   <% end %>
 </div>

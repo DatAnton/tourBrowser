@@ -3,7 +3,7 @@ class CreateHotels < ActiveRecord::Migration[5.2]
     create_table :hotels do |t|
       t.string :name
       t.string :description
-      t.string :image
+      t.integer :image
       t.integer :user_id
 
       t.timestamps

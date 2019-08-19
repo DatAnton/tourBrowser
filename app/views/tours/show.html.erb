@@ -1,5 +1,49 @@
-<%= link_to '<- Tours', tours_path %>
-<h2>Tour: <%= @tour.name %></h2>
+<%= link_to '<- Tours', tours_path, class: 'btn btn-light' %>
+<%= link_to 'Find hotel by location', hotels_path(location_id: @tour.location.id), class: 'btn btn-info float-right', style: 'margin: 0 10px 0 0' %>
+<h2 class="text-center">Tour</h2>
+<div class="card">
+  <div class="card-header">
+    <h3 class="text-primary"><%= @tour.name %>
+      <%= link_to image_tag('pencil.png', alt: 'edit button', style: 'height:20px'), edit_tour_path(@tour), class: 'btn btn-warning' if current_user.id == @tour.creator_id %>
+    </h3>
+  </div>
+  <div class="card-body">
+    <%= image_tag(Tour.main_image(@tour.image_id).image, alt: 'Image',
+        style: 'height:250px;border-radius:5px;margin:10px') if @tour.image_id? %>
+    <p class="text-info"><%= @tour.description %></p>
+    <blockquote class="blockquote mb-0">
+      <p>Location: <%= @tour.location.name %>, <%= @tour.location.region %> <%= link_to '(on map)',
+        "https://www.google.com.ua/maps/place/#{@tour.location.name}", target: :_blank %></p>
+      <p>Number of savings: <%= @num_of_savings %></p>
+      <p>Updated: <%= @tour.updated_at.to_date %></p>
+    </blockquote>
+    <% result_creator = creator_exists(@tour.creator_id) %>
+    <% if result_creator %>
+    <p>Author: <%= link_to result_creator.username, user_show_path(result_creator) %></p>
+    <% end %>
+  </div>
+</div>
+
+<p></p>
+<div class="card">
+  <div class="card-header">
+    Weather
+  </div>
+  <div class="card-body">
+
+    <blockquote class="blockquote mb-0">
+      <p>Temperature: <%= @weather['temperature'] %> &#176;C</p>
+      <p>Humidity: <%= @weather['humidity'] %>%</p>
+      <footer class="blockquote-footer">Для ленивой породы никогда нет доброй погоды.</footer>
+    </blockquote>
+  </div>
+</div>
+
+
+<h4>Comments: </h4>
+<adding-comment :in_tour_id="<%= @tour.id %>"></adding-comment>
+
+<h2 class="text-center">Photos:</h2>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <% @tour.images.each do |imag| %>
@@ -25,37 +69,3 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-<%= link_to 'edit tour', edit_tour_path(@tour) if current_user.id == @tour.creator_id %><br>
-<%= image_tag(Tour.main_image(@tour.image_id).image, alt: 'Image',
-    style: 'height:150px;border-radius:5px') if @tour.image_id? %>
-<br>
-<saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= @tour.id %>"
-  :is_saved="<%= is_saved?(@tour) %>"></saving-tour>
-
-<p>Description: <%= @tour.description %></p>
-<p>Location: <%= @tour.location.name %></p>
-<p>Number of savings: <%= @num_of_savings %></p>
-<p>Link to map: <%= link_to @tour.location.name,
-  "https://www.google.com.ua/maps/place/#{@tour.location.name}", target: :_blank %></p>
-
-<hr>
-<h4>WEATHER</h4>
-<p>temperature: <%= @weather['temperature'] %></p>
-<p>clouds: <%= @weather['clouds'] %></p>
-<p>humidity: <%= @weather['humidity'] %></p>
-
-<hr>
-<p>Private: <%= @tour.is_private %></p>
-<% result_creator = creator_exists(@tour.creator_id) %>
-<% if result_creator %>
-<p>Author: <%= link_to result_creator.username, user_show_path(result_creator) %></p>
-<% end %>
-<p>Created: <%= @tour.updated_at %></p>
-<h4>Photos:</h4>
-<% @tour.images.each do |imag| %>
-<%= image_tag(imag.image, alt: 'Image',
-    style: 'height:100px;border-radius:5px') %>
-<% end %>
-
-<h5>Add your comment: </h5>
-<adding-comment :in_tour_id="<%= @tour.id %>"></adding-comment>

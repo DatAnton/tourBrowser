@@ -11,26 +11,36 @@
       </div>
     </div>
 
-    <label for="">Name</label><br>
-    <input type="text" v-model="tour.name" placeholder="What is name?">
-    <br>
-    <textarea v-model="tour.description" placeholder="What you will see?">
-    </textarea><br>
+    <div class="form-group">
+      <label for="">Name</label>
+      <input type="text" v-model="tour.name" class="form-control" placeholder="What is name?">
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <textarea v-model="tour.description" class="form-control" placeholder="What you will see?"></textarea>
+    </div>
 
-    <label for="">Select location</label><br>
-    <label for="">Region</label><br>
-    <select v-model="selectedRegion">
-      <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
-    </select>
-    <br>
-    <label for="">Location</label>
-    <select v-model="tour.location_id">
-      <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
-    </select><br>
+    <div class="form-group">
+      &nbsp;<input type="checkbox" v-model="tour.is_private">
+      <label for="horns">private?</label><br>
+    </div>
 
-    <input type="checkbox" v-model="tour.is_private">
-    <label for="horns">private?</label><br>
+    <h3 class="text-center">Select location</h3>
+    <div class="row">
+      <div class="col">
+        <select v-model="selectedRegion" class="form-control">
+          <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
+        </select>
+      </div>
+      <div class="col">
+        <select v-model="tour.location_id" class="form-control">
+          <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
+        </select><br>
+      </div>
+    </div>
 
+    <h3 class="text-center">Photos</h3>
+    <hr>
 
     <label for="">Choose main image:</label>
     <br>
@@ -43,19 +53,18 @@
     <div class="" v-for="imag in tour.images">
       <img v-if="imag.id != 0" v-bind:src="imag.image" class="uploading-image" style="border: double yellow 3px;"/>
       <img v-else v-bind:src="imag.image" class="uploading-image" />
-      <button type="button" name="button" @click="deleteImage(imag)">delete</button>
+      <button type="button" name="button" class="btn btn-danger" @click="deleteImage(imag)">delete</button>
       <br>
     </div>
-    <label for="">Select images:</label>
+    <label for="">Select other images:</label>
     <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
 
-    <button type="button" name="button" v-on:click="sendData" v-bind:disabled="saving">Save</button>
+    <button type="button" name="button" v-on:click="sendData" class="btn btn-primary" style="margin:10px" v-bind:disabled="saving">Save</button>
 
   </div>
 </template>
 
 <script>
-// image is object, not string
 export default {
   props: {
     tour_in: {

@@ -1,0 +1,18 @@
+<%= link_to '<- Back', :back, class: 'btn btn-light' %>
+<hr>
+  <% if @location %>
+    <filter-hotels :region_in="'<%= @location.region %>'" :location_in="<%= @location.id %>"></filter-hotels>
+  <% else %>
+    <filter-hotels></filter-hotels>
+  <% end %>
+<hr>
+<% if @hotels.length != 0 %>
+  <div class="card-columns">
+    <%= render @hotels %>
+  </div>
+<% else %>
+  <h3 class="text-center text-warning">There are not any hotels in this town.</h3>
+<% end %>
+<div class="text-center">
+  <%= will_paginate @tours, renderer: BootstrapPagination::Rails %>
+</div>

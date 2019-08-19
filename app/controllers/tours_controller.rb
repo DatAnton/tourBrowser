@@ -39,13 +39,14 @@ class ToursController < ApplicationController
 
   def destroy
     @tour = Tour.find params[:id]
-    @tour.destroy
+    if @tour.creator_id == current_user.id
+      @tour.destroy
+    end
     redirect_to tours_path
   end
 
   def create
     @tour = Tour.new(tour_params)
-    @user = current_user
 
     @tour.creator_id = current_user.id
 
@@ -90,24 +91,25 @@ class ToursController < ApplicationController
   def index
     @sorting_filter = true? params[:sort_by_savings]
     @location_filter = Location.all.where(id: params[:location_id]).first
+    @searching_string = ''
 
-    find_hash = Hash.new
-    find_hash[:is_private] = false
-    find_hash[:location_id] = @location_filter.id if @location_filter
+    if params[:searching_string]
+      @searching_string = params[:searching_string].downcase
+      @tours = Tour.all.where(is_private: false).select { |tour| tour.name.downcase.include? @searching_string }
+    else
 
-    @tours = Tour.all.where(find_hash)
+      find_hash = Hash.new
+      find_hash[:is_private] = false
+      find_hash[:location_id] = @location_filter.id if @location_filter
 
-    if @sorting_filter
-      @tours = @tours.sort_by { |t| t.users.length }
-      @tours.reverse!
+      @tours = Tour.all.where(find_hash)
+
+      if @sorting_filter
+        @tours = @tours.sort_by { |t| t.users.length }
+        @tours.reverse!
+      end
     end
     @tours = @tours.paginate(page: params[:page], per_page: 6)
-    
-  end
-
-  def sorting_by_savings
-    @sorted_tours = Tour.all.where(is_private: false).sort_by { |t| t.users.length }
-    @sorted_tours.reverse!
   end
 
   private

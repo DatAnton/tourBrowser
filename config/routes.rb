@@ -8,21 +8,29 @@ Rails.application.routes.draw do
   get 'tours/saved_tours', to: 'tours#saved_tours', as: :saved_tours
 
   get 'users/profile', to: 'users#profile', as: :user_profile
-  get 'users/index_for_hotels', to: 'users#index_for_hotels'
+  put 'users/edit_count_of_hotels', to: 'users#edit_count_of_hotels'
+  get 'users/edit_users', to: 'users#edit_users', as: :edit_count_of_hotels
   get 'users/:id', to: 'users#show', as: :user_show
   get 'users/:id/tours', to: 'users#tours'
   delete 'users/destroy', to: 'users#destroy', as: :user_destroy
 
   resources :tours do
-    resources :comments
+    resources :comments, only: [:index, :create]
     resources :images, only: [:destroy]
   end
 
   resources :plans do
-    resources :plan_points
+    resources :plan_points, only: [:new, :create, :destroy]
   end
 
   delete 'tours_and_users/delete', to: 'tours_and_users#delete'
+  get 'hotels/hotels_of_user', to: 'hotels#hotels_of_user', as: :hotels_of_user
+
   resources :tours_and_users, only: [:create, :index]
+
+  resources :hotels
+
+  get 'static_pages/about', to: 'static_pages#about', as: :about_page
+  get 'static_pages/hotel_info', to: 'static_pages#hotel_info', as: :hotel_info
 
 end

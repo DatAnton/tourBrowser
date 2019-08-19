@@ -17,6 +17,10 @@ import SavingTour from './components/saving_tour.vue'
 import FilterTours from './components/filter_tours.vue'
 import NewPlanModal from './components/new_plan_modal.vue'
 import EditPlan from './components/edit_plan.vue'
+import CountOfHotels from './components/count_of_hotels.vue'
+import NewHotelForm from './components/new_hotel_form.vue'
+import HotelFreeAct from './components/hotel_free_act.vue'
+import FilterHotels from './components/filter_hotels.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -27,7 +31,8 @@ document.addEventListener('turbolinks:load', () => {
       message: "Can you say hello?"
     },
     components: { App, FormNewTour, FormEditTour, AddingComment, SavingTour,
-      FormNewPlanPoint, FilterTours, NewPlanModal, EditPlan }
+      FormNewPlanPoint, FilterTours, NewPlanModal, EditPlan, CountOfHotels,
+      NewHotelForm, HotelFreeAct, FilterHotels }
   })
 })
 

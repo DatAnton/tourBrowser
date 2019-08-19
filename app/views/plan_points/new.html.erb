@@ -1,2 +1,3 @@
-<h2>Point of |<%= @plan.name %>| plan</h2>
+<%= link_to '<- Plan', @plan, class: 'btn btn-light' %>
+<h2 class="text-center">Point of <span class="text-info"> |<%= @plan.name %>|</span></h2>
 <form-new-plan-point :user_id="<%= current_user.id %>" :plan_in_id="<%= @plan.id %>"></form-new-plan-point>

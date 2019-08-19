@@ -1,0 +1,68 @@
+<% if current_user.id == @hotel.user_id %>
+  <%= link_to '<- My hotels', hotels_of_user_path, class: 'btn btn-light' %><br>
+<% end %>
+<%= link_to '<- Hotels', hotels_path, class: 'btn btn-light' %>
+<h2 class="text-center">Hotel</h2>
+
+
+<div class="card">
+  <div class="card-header">
+    <h3 class="text-primary"><%= @hotel.name %><% if @hotel.user_id == current_user.id %>
+      <%= link_to 'Destroy', @hotel, class: 'btn btn-danger', method: :delete, data: { confirm: "You sure?" } %>
+    <% end %></h3>
+  </div>
+  <div class="card-body">
+    <%= image_tag(Hotel.main_image(@hotel.image_id).image, alt: 'Image', style: 'height:250px;border-radius:5px;margin:10px') if @hotel.image_id? %>
+
+    <p class="text-info"><%= @hotel.description %></p>
+    <blockquote class="blockquote mb-0">
+      <p>Address: <%= @hotel.address %></p>
+      <p>Contacts: <%= @hotel.contacts %></p>
+      <p>Location: <%= @hotel.location.name %>, <%= @hotel.location.region %> <%= link_to '(map)',
+        "https://www.google.com.ua/maps/place/#{@hotel.location.name}, #{@hotel.address}", target: :_blank %></p>
+
+    </blockquote>
+    <% if current_user.id == @hotel.user_id %>
+      <hotel-free-act :status_in="<%= @hotel.free %>" :hotel_id="<%= @hotel.id %>"></hotel-free-act>
+    <% else %>
+      <% if @hotel.free %>
+      <p class="p-3 mb-2 bg-success text-white" style="width:50px">Free</p>
+      <% else %>
+      <p class="p-3 mb-2 bg-danger text-white" style="width:60px">Busy</p>
+      <% end %>
+    <% end %>
+    <% result_owner = owner_exists(@hotel.user_id) %>
+    <% if result_owner %>
+    <p>Owner: <%= link_to result_owner.username, user_show_path(result_owner) %></p>
+    <% end %>
+    <p>Created: <%= @hotel.updated_at.to_date %></p>
+  </div>
+</div>
+
+<hr>
+<h2 class="text-center">Photos:</h2>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <% @hotel.image_hotels.each do |imag| %>
+    <% if @hotel.image_hotels.index(imag) == 0 %>
+      <div class="carousel-item active">
+        <%= image_tag(@hotel.image_hotels.first.image, alt: 'Image',
+        class: "d-block w-100") %>
+      </div>
+    <% else %>
+    <div class="carousel-item">
+      <%= image_tag(imag.image, alt: 'Image',
+      class: "d-block w-100") %>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

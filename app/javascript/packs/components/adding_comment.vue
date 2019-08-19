@@ -1,9 +1,20 @@
 <template>
   <div>
-    <p v-for="comm in comments">{{ comm.body }} -_- {{ comm.author.user.username }}
-      <img v-bind:src="comm.author.user.avatar.url" alt="avatar" style="height:30px;width:30px;border-radius:5px"> </p>
-    <textarea v-model="comment.body"></textarea>
-    <button type="button" @click="addComment">Comment</button>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="comm in comments">
+        <img v-bind:src="comm.author.user.avatar.url" alt="avatar" style="height:30px;width:30px;border-radius:5px">
+        <div class="border border-info" style="display:inline">
+          {{ comm.author.user.username }}:
+        </div>
+         {{ comm.body }}
+      </li>
+
+      </ul>
+    <form class="form-inline">
+      <textarea class="form-control w-75 p-3" placeholder="Your comment..." id="exampleFormControlTextarea1" rows="2" v-model="comment.body"></textarea>
+      &nbsp;&nbsp;&nbsp;
+      <button type="button" @click="addComment" class="btn btn-primary mb-2">Add</button>
+    </form>
   </div>
 </template>
 

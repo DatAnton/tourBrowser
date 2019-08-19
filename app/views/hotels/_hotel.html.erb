@@ -1,0 +1,10 @@
+<div class="card">
+    <%= image_tag(Hotel.main_image(hotel.image_id).image, class: "card-img-top", alt: 'Image') if hotel.image_id? %>
+    <div class="card-body">
+      <h3 class="card-title"><%= link_to hotel.name, hotel_path(hotel) %></h3>
+      <p class="card-text"><%= hotel.location.name %>, <%= hotel.location.region %> | <%= hotel.address %><br>
+        <%= hotel.contacts %>
+      </p>
+      <p class="card-text"><small class="text-muted">Owner: <%= link_to hotel.user.username, user_show_path(hotel.user) %></small></p>
+    </div>
+  </div>

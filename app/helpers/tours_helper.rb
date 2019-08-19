@@ -4,7 +4,6 @@ module ToursHelper
   end
 
   def creator_exists(creator_id)
-    # creator_id != 0 ? User.where(id: creator_id).first : nil
     User.where(id: creator_id).first
   end
 end

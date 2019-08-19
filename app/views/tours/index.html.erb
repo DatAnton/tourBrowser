@@ -2,9 +2,9 @@
 <div class="">
   <% if @location_filter %>
     <filter-tours :sort_in="<%= @sorting_filter %>" :location_in="<%= @location_filter.id %>"
-      :region_in="'<%= @location_filter.region %>'"></filter-tours>
+      :region_in="'<%= @location_filter.region %>'" :searching_string_in="'<%= @searching_string %>'"></filter-tours>
   <% else %>
-    <filter-tours :sort_in="<%= @sorting_filter %>"></filter-tours>
+    <filter-tours :sort_in="<%= @sorting_filter %>" :searching_string_in="'<%= @searching_string %>'"></filter-tours>
   <% end %>
 </div>
 

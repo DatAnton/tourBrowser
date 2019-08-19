@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true
   validates :avatar, presence: true
+  validates :count_of_hotels, numericality: { other_than: -1 }
 
   scope :created_tours, -> (user_id){ Tour.where(creator_id: user_id) }
 

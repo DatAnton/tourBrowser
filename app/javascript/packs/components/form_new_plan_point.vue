@@ -1,30 +1,41 @@
 <template>
   <div>
+
     <div class="alert alert-warning" role="alert" v-for="error in errors">
       {{ error }}
     </div>
 
      <form>
-       <br>
-       <label for="">Day:</label>
-       <input type="date" name="" value="" v-model="planPoint.day_date">
+       <div class="form-group">
+         <label for="">Day:</label>
+         <input type="date" name="" class="form-control" value="" v-model="planPoint.day_date">
+       </div>
 
-       <br>
-       <label for="">From</label>
-       <input type="time" name="" value="" v-model="planPoint.from_time">
-       <label for="">To</label>
-       <input type="time" name="" value="" v-model="planPoint.to_time">
+       <div class="row">
+         <div class="col">
+           <label for="">From</label>
+           <input type="time" name="" class="form-control" value="" v-model="planPoint.from_time">
+         </div>
+         <div class="col">
+           <label for="">To</label>
+            <input type="time" class="form-control" name="" value="" v-model="planPoint.to_time">
 
+          </div>
+        </div>
 
-       <h4>Chosen tour: </h4>
        <div class="" v-if="selectedTour != 0">
-         <h5>{{ selectedTour.name  }}</h5>
-         <h6>Region: {{ selectedTour.location.name }}, {{ selectedTour.location.region }}</h6>
-         <img v-bind:src="selectedTour.image.picture" alt="image" style="height:100px">
+         <h4>Chosen tour: </h4>
+           <div class="card" style="width: 18rem; margin:20px">
+             <img v-bind:src="selectedTour.image.picture" alt="image" class="card-img-top">
+             <div class="card-body">
+               <h4>{{ selectedTour.name  }}</h4>
+               <p class="card-text">{{ selectedTour.location.name }}, {{ selectedTour.location.region }}</p>
+             </div>
+            </div>
        </div>
 
       <br>
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+      <button type="button" style="margin:10px" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
         Choose tour
       </button>
 
@@ -54,7 +65,7 @@
         </div>
       </div>
       <br><br>
-      <button type="button" name="button" class="btn btn-primary" @click="sendData">Save</button>
+      <button type="button" style="margin:10px" name="button" class="btn btn-primary" @click="sendData">Save</button>
      </form>
   </div>
 </template>

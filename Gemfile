@@ -8,6 +8,10 @@ gem 'rails', '~> 5.2.3'
 # Use jdbcsqlite3 as the database for Active Record
 gem 'activerecord-jdbcsqlite3-adapter'
 # Use Puma as the app server
+
+# Use jdbcpostgresql as the database for Active Record
+gem 'activerecord-jdbcpostgresql-adapter'
+
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

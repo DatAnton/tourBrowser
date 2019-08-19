@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user_tours = Tour.all.where(creator_id: @user.id)
   end
 
-  def index_for_hotels
+  def edit_users
     if current_user.admin
       @users = User.all.where(admin: false)
     else
@@ -23,6 +23,15 @@ class UsersController < ApplicationController
     render json: @user.tours
   end
 
+  def edit_count_of_hotels
+    @user = User.find params[:user_id]
+    if @user.update_attribute(:count_of_hotels, params[:count_of_hotels]) && current_user.admin
+      render json: true
+    else
+      render json: false
+    end
+  end
+
 
   def destroy
     @user = current_user
@@ -30,8 +39,14 @@ class UsersController < ApplicationController
     @user_tours.each do |tour|
       tour.update_attribute(:creator_id, 0)
     end
-    puts "HERE"
+    
     @user.destroy
     redirect_to root_path
+  end
+
+  private
+
+  def edit_count_of_hotels_params
+    params.require(:user).permit(:count_of_hotels, :user_id)
   end
 end

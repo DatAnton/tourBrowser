@@ -1,0 +1,19 @@
+<h2 class="text-center">My hotels</h2>
+
+<div class="list-group">
+  <% @hotels.each do |hotel| %>
+    <a href="<%= hotel_path(hotel) %>" class="list-group-item list-group-item-action">
+      <%= image_tag Hotel.main_image(hotel.image_id).image, style: 'height: 100px;border-radius:5px' %>
+      <div class="d-flex w-100 justify-content-between">
+        <h3 class="mb-1"><%= hotel.name %></h3>
+        <% if hotel.free %>
+          <p class="p-3 mb-2 bg-success text-white">Free</p>
+        <% else %>
+          <p class="p-3 mb-2 bg-danger text-white">Busy</p>
+        <% end %>
+      </div>
+      <p class="mb-1"><%= hotel.description %></p>
+      <small class="text-muted"><i>Location:</i> <%= hotel.location.name %>, <%= hotel.location.region %></small>
+    </a>
+  <% end %>
+</div>

@@ -20,10 +20,19 @@
         </div>
 
         <div class="col-auto my-1">
-          <a v-bind:href="filterString" class="btn btn-primary">FIND</a>
+          <a v-bind:href="filterString" class="btn btn-success">Find</a>
+          <a v-bind:href="searchHotel" class="btn btn-primary">Find hotel by location</a>
           <button type="button" class="btn btn-light" @click="clearFilters">Clear filters</button>
         </div>
+      </div><br>
+    </form>
+    <form class="form-inline">
+      <div class="form-group mx-sm-3 mb-2">
+        <i>Search by name:</i>
+        <input type="text" class="form-control" placeholder="Tour's name" v-model="searchingString">
+        <button type="button" class="btn btn-info" @click="sendSearchString">Search</button>
       </div>
+
     </form>
   <hr>
 </div>
@@ -40,6 +49,10 @@ export default {
     sort_in: {
       type: Boolean,
       default: false
+    },
+    searching_string_in: {
+      type: String,
+      default: ''
     }
   },
   data: function () {
@@ -49,7 +62,9 @@ export default {
       locations: Array,
       selectedLocation: 0,
       sortBySavings: this.sort_in,
-      filterString: ''
+      filterString: '',
+      searchingString: this.searching_string_in,
+      searchHotel: ''
     }
   },
   methods: {
@@ -58,6 +73,9 @@ export default {
       this.selectedLocation = 0;
       this.sortBySavings = false;
       window.location.href = '/tours';
+    },
+    sendSearchString: function(){
+      window.location.href = `/tours?searching_string=${this.searchingString}`;
     }
   },
   mounted: async function() {
@@ -67,6 +85,7 @@ export default {
     this.selectedRegion = this.region_in;
     this.selectedLocation = this.location_in;
 
+    this.searchHotel = `/hotels?location_id=${this.selectedLocation}`;
 
     this.filterString = `/tours?location_id=${this.selectedLocation}&sort_by_savings=${this.sortBySavings}`;
     this.regions = regins;

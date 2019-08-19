@@ -1,14 +1,23 @@
-<h2>User</h2>
-<p><%= @user.username %></p>
-<p><%= @user.email %></p>
-<%= image_tag @user.avatar.url, alt: 'avatar', style: 'weight:200px;height:200px'%><br>
-<p class="font-italic"><%= @user.description %></p>
-<h4>Statistics:</h4>
-<p>Number of tours: <%= @user_tours.length %></p>
-<hr>
+<h2 class="text-center">User's profile</h2>
+<div class="card">
+  <div class="card-header">
+    <h3 class="text-primary">&nbsp;&nbsp;<%= @user.username %></h3>
+    <h5 class="text-secondary">&nbsp;&nbsp;&nbsp;&nbsp;<%= @user.email %></h5>
+  </div>
+  <div class="card-body">
+    <%= image_tag @user.avatar.url, alt: 'avatar', style: 'weight:200px;height:200px;border-radius:5px;margin:10px'%><br>
+    <p class="text-info"><%= @user.description %></p>
+    <blockquote class="blockquote mb-0">
+      <p>Number of tours: <%= @user_tours.length %></p>
+    </blockquote>
+  </div>
+</div>
 
-<h2 class="text text-center"><%= @user.username %>s' tours</h2>
-<div class="card-columns">
-  <%= render @user_tours %>
-</div>
-</div>
+
+<% if @user_tours.length != 0 %>
+  <hr>
+  <h2 class="text text-center"><%= @user.username %>s' tours</h2>
+  <div class="card-columns">
+    <%= render @user_tours %>
+  </div>
+<% end %>

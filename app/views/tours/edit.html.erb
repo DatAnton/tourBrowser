@@ -1,5 +1,5 @@
-<h2>Tour <%= @tour.name %></h2>
-<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" } if current_user.id == @tour.creator_id %>
+<h2 class="text-center">Edit tour</h2>
+<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger', style: 'margin: 10px' if current_user.id == @tour.creator_id %>
 
 <form-edit-tour :tour_in="<%= @tour.to_json %>"
   :location_in="<%= @tour.location.to_json %>"

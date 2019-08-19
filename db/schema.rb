@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_070011) do
+ActiveRecord::Schema.define(version: 2019_08_19_145835) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -32,8 +32,19 @@ ActiveRecord::Schema.define(version: 2019_08_13_070011) do
   create_table "hotels", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.string "image"
+    t.integer "image_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "contacts"
+    t.string "address"
+    t.integer "location_id"
+    t.boolean "free"
+  end
+
+  create_table "image_hotels", force: :cascade do |t|
+    t.integer "hotel_id"
+    t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -99,8 +110,6 @@ ActiveRecord::Schema.define(version: 2019_08_13_070011) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "provider"
-    t.string "uid"
     t.text "avatar"
     t.string "description"
     t.boolean "admin", default: false

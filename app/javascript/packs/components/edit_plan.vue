@@ -1,7 +1,9 @@
 <template>
   <div>
     <h2 class="text-center">{{ plan.name }}
-      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
+      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
+        <img src="../images/pencil.png" style="height:20px">
+      </button>
     </h2>
 
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
