@@ -47,8 +47,6 @@ gem 'foreman'
 
 # gems for authentication
 gem 'devise'
-# FaceBook authentication
-gem 'omniauth-facebook'
 
 # for styles
 gem 'jquery-rails'
