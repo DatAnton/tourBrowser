@@ -38,15 +38,17 @@ gem 'will_paginate-bootstrap'
 # uploading avatar
 gem 'carrierwave'
 
-# for serializers
+# for serializer
 gem 'active_model_serializers'
 
 # for Vue js
 gem 'webpacker'
 gem 'foreman'
 
-# gems for authentication of user
+# gems for authentication
 gem 'devise'
+# FaceBook authentication
+gem 'omniauth-facebook'
 
 # for styles
 gem 'jquery-rails'
