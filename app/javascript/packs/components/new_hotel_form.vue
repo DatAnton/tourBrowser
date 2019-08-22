@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex align-items-center" v-if="saving">
-      <strong>Saving...</strong>&nbsp;&nbsp;&nbsp;
+      <strong>Сохранение...</strong>&nbsp;&nbsp;&nbsp;
       <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
       </div>
@@ -12,63 +12,106 @@
     </div>
 
     <div class="form-group">
-      <label for="">Name</label>
-      <input type="text" class="form-control" v-model="hotel.name" placeholder="What is your hotel's name?">
-    </div>
-    <div class="">
-      <label for="">Description</label>
-      <textarea class="form-control" v-model="hotel.description" placeholder="What is your hotel?">
-      </textarea>
-    </div>
-
-
-    <h3 class="text-center">Select location</h3>
-    <div class="row">
-      <div class="col">
-        <select v-model="selectedRegion" class="form-control">
-          <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
-        </select>
+      <div class="container-fluid page">
+        <div class="row">
+          <div class="offset-4 col-6">
+            <label for="">Имя</label>
+            <input type="text" class="form-control" v-model="hotel.name" placeholder="Какое имя вашего отеля?">
+          </div>
+        </div>
       </div>
-      <div class="col">
-        <select v-model="hotel.location_id" class="form-control">
-          <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
-        </select>
+    </div>
+    <div class="form-group">
+      <div class="container-fluid page">
+        <div class="row">
+          <div class="offset-4 col-6">
+            <label for="">Описание</label>
+            <textarea class="form-control" rows="3" v-model="hotel.description" placeholder="Опишите свой отель.">
+            </textarea>
+          </div>
+        </div>
       </div>
     </div>
 
+
+    <h3 class="text-center" style="margin:100px 0 25px 0">Выберите локацию</h3>
     <div class="form-group">
-      <label for="">Address</label><br>
-      <input type="text" class="form-control" v-model="hotel.address" placeholder="What is your hotel's address?">
+    <div class="container-fluid page">
+      <div class="row">
+        <div class="offset-4 col-6">
+          <label for="">Область</label>
+          <select v-model="selectedRegion" class="form-control">
+            <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
+          </select>
+        </div>
+        </div>
+      </div>
+      </div>
+      <div class="form-group">
+      <div class="container-fluid page">
+        <div class="row">
+          <div class="offset-4 col-6">
+            <label for="">Город</label>
+            <select v-model="hotel.location_id" class="form-control">
+              <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    <div class="form-group">
+      <div class="container-fluid page">
+        <div class="row">
+          <div class="offset-4 col-6">
+            <label for="">Адресс</label><br>
+            <input type="text" class="form-control" v-model="hotel.address" placeholder="Какой адресс вашего отеля?">
+          </div>
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="">Contacts</label><br>
-      <input type="text" class="form-control" v-model="hotel.contacts" placeholder="How travellers can to conect with you?">
+      <div class="container-fluid page">
+        <div class="row">
+          <div class="offset-4 col-6">
+            <label for="">Контакты</label><br>
+            <input type="text" class="form-control" v-model="hotel.contacts" placeholder="Как пользователи могут связаться с вами?">
+          </div>
+        </div>
+      </div>
     </div>
-    <hr>
+    <div class="container-fluid page">
+      <div class="row">
+        <div class="offset-4 col-6">
     <input type="checkbox" v-model="hotel.free">
-    <label for="horns">Do you have a free places?<i>(you can change it later)</i></label><br>
+    <label for="horns">Вы имеете свободные места?<i>(Вы можете поменять это позже)</i></label><br>
+        </div>
+      </div>
+    </div>
+    <h3 class="text-center" style="margin:100px 0 25px 0">Фотографии</h3>
+    <div class="container-fluid page">
+      <div class="row">
+        <div class="offset-4 col-6">
 
-    <h3 class="text-center">Photos</h3>
-    <hr>
-    <div>
-
-      <label for="">Choose main image:</label>
+      <label for="">Выберите главную фотографию:</label>
       <br>
       <img v-if="hotel.main_image != null" v-bind:src="hotel.main_image"
         class="uploading-image"/>
       <input type="file" accept="image/jpeg" @change="uploadImage">
-      <h4>Gallery:</h4>
+      <h4>Галерея:</h4>
       <div class="" v-for="imag in hotel.images">
         <img v-bind:src="imag"
         class="uploading-image"/>
-        <button type="button" name="button" class="btn btn-danger" @click="deleteImage(imag)">delete</button>
+        <button type="button" name="button" class="btn btn-danger" @click="deleteImage(imag)">удалить</button>
         <br>
       </div>
-      <label for="">Select other images:</label>
+      <label for="">Выберите другие фотографии:</label>
       <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
+      <button type="button" name="button" class="btn btn-primary" v-on:click="sendData" v-bind:disabled="saving">Создать</button>
+    </div>
+    </div>
     </div>
 
-    <button type="button" name="button" class="btn btn-primary" style="margin:10px" v-on:click="sendData" v-bind:disabled="saving">Create</button>
 
   </div>
 </template>

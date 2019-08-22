@@ -5,62 +5,104 @@
     </div>
 
     <div class="d-flex align-items-center" v-if="saving">
-      <strong>Saving...</strong>&nbsp;&nbsp;&nbsp;
+      <strong>Сохранение...</strong>&nbsp;&nbsp;&nbsp;
       <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="">Name</label>
-      <input type="text" v-model="tour.name" class="form-control" placeholder="What is name?">
-    </div>
-    <div class="form-group">
-      <label for="">Description</label>
-      <textarea v-model="tour.description" class="form-control" placeholder="What you will see?"></textarea>
+      <div class="container-fluid page">
+         <div class="row">
+             <div class="offset-4 col-6">
+               <label for="">Имя тура</label>
+               <input type="text" v-model="tour.name" class="form-control" placeholder="What is name?">
+              </div>
+          </div>
+        </div>
     </div>
 
     <div class="form-group">
+      <div class="container-fluid page">
+         <div class="row">
+             <div class="offset-4 col-6">
+                <label for="">Описание</label>
+                <textarea v-model="tour.description" rows="10" class="form-control" placeholder="What you will see?"></textarea>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <div class="container-fluid page">
+         <div class="row">
+             <div class="offset-4 col-6">
       &nbsp;<input type="checkbox" v-model="tour.is_private">
-      <label for="horns">private?</label><br>
+      <label for="horns">Приватный?</label><br>
+              </div>
+          </div>
+        </div>
     </div>
 
-    <h3 class="text-center">Select location</h3>
-    <div class="row">
-      <div class="col">
-        <select v-model="selectedRegion" class="form-control">
-          <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
-        </select>
+    <h3 class="text-center" style="margin:100px 0 25px 0">Выберите локацию</h3>
+
+    <div class="form-group">
+      <div class="container-fluid page">
+         <div class="row">
+             <div class="offset-4 col-6">
+               <label for="">Область</label>
+              <select v-model="selectedRegion" class="form-control">
+                <option v-for="regin in regions" v-bind:value="regin">{{ regin }}</option>
+              </select>
+              </div>
+          </div>
       </div>
-      <div class="col">
-        <select v-model="tour.location_id" class="form-control">
-          <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
-        </select><br>
-      </div>
     </div>
 
-    <h3 class="text-center">Photos</h3>
-    <hr>
+      <div class="form-group">
+        <div class="container-fluid page">
+           <div class="row">
+               <div class="offset-4 col-6">
+                 <label for="">Город</label>
+                  <select v-model="tour.location_id" class="form-control">
+                    <option v-for="location in locations" v-bind:value="location.id">{{ location.name }}</option>
+                  </select><br>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <label for="">Choose main image:</label>
-    <br>
-    <img v-if="tour.main_image != null && tour.main_image.id != 0" v-bind:src="tour.main_image.image"
-      class="uploading-image" style="border: double yellow 3px;"/>
-    <img v-else="tour.main_image != null" v-bind:src="tour.main_image.image"
-      class="uploading-image" />
-    <input type="file" accept="image/jpeg" @change="uploadImage">
-    <h4>Gallery:</h4>
-    <div class="" v-for="imag in tour.images">
-      <img v-if="imag.id != 0" v-bind:src="imag.image" class="uploading-image" style="border: double yellow 3px;"/>
-      <img v-else v-bind:src="imag.image" class="uploading-image" />
-      <button type="button" name="button" class="btn btn-danger" @click="deleteImage(imag)">delete</button>
-      <br>
-    </div>
-    <label for="">Select other images:</label>
-    <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
 
-    <button type="button" name="button" v-on:click="sendData" class="btn btn-primary" style="margin:10px" v-bind:disabled="saving">Save</button>
 
+          <h3 class="text-center" style="margin:100px 0 25px 0">Фотографии</h3>
+          <div class="container-fluid page">
+            <div class="row">
+              <div class="offset-4 col-6">
+                <label for="">Выберите главную фотографию:</label>
+                    <br>
+                    <img v-if="tour.main_image != null && tour.main_image.id != 0" v-bind:src="tour.main_image.image"
+                      class="uploading-image" style="border: double yellow 3px;"/>
+                    <img v-else="tour.main_image != null" v-bind:src="tour.main_image.image"
+                      class="uploading-image" />
+                    <input type="file" accept="image/jpeg" @change="uploadImage">
+
+
+          <h4>Галерея:</h4>
+          <div class="" v-for="imag in tour.images">
+            <img v-if="imag.id != 0" v-bind:src="imag.image" class="uploading-image" style="border: double yellow 3px;"/>
+            <img v-else v-bind:src="imag.image" class="uploading-image" />
+            <button type="button" name="button" class="btn btn-danger" @click="deleteImage(imag)">удалить</button>
+            <br>
+          </div>
+          <label for="">Выберите другие фотографии:</label>
+          <input type="file" multiple="multiple" accept="image/jpeg" @change="uploadGallery"><br>
+
+          <button type="button" name="button" v-on:click="sendData" class="btn btn-primary" v-bind:disabled="saving">Сохранить</button>
+
+
+              </div>
+            </div>
+          </div>
   </div>
 </template>
 
@@ -158,7 +200,7 @@ export default {
         self.saving = false;
       }
       else {
-        window.location.href = '/tours';
+        window.location.href = `/tours/${result.id}`;
       }
     }
   },

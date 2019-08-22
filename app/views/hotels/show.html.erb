@@ -1,46 +1,50 @@
+<h2 class="text-center">Отель</h2>
 <% if current_user.id == @hotel.user_id %>
-  <%= link_to '<- My hotels', hotels_of_user_path, class: 'btn btn-light' %><br>
+  <%= link_to image_tag('back_button', alt: 'back', style: 'height:40px;margin:15px'), hotels_of_user_path %><br>
+<% else %>
+  <%= link_to image_tag('back_button', alt: 'back', style: 'height:40px;margin:15px'), hotels_path %>
 <% end %>
-<%= link_to '<- Hotels', hotels_path, class: 'btn btn-light' %>
-<h2 class="text-center">Hotel</h2>
 
 
 <div class="card">
   <div class="card-header">
     <h3 class="text-primary"><%= @hotel.name %><% if @hotel.user_id == current_user.id %>
-      <%= link_to 'Destroy', @hotel, class: 'btn btn-danger', method: :delete, data: { confirm: "You sure?" } %>
+      <%= link_to 'Удалить', @hotel, class: 'btn btn-danger', method: :delete, data: { confirm: "Вы уверенны?" } %>
     <% end %></h3>
   </div>
   <div class="card-body">
-    <%= image_tag(Hotel.main_image(@hotel.image_id).image, alt: 'Image', style: 'height:250px;border-radius:5px;margin:10px') if @hotel.image_id? %>
+    <div class="form-inline">
+      <%= image_tag(Hotel.main_image(@hotel.image_id).image, alt: 'Image', style: 'height:250px;border-radius:5px;margin:10px;float:left') if @hotel.image_id? %>
 
-    <p class="text-info"><%= @hotel.description %></p>
-    <blockquote class="blockquote mb-0">
-      <p>Address: <%= @hotel.address %></p>
-      <p>Contacts: <%= @hotel.contacts %></p>
-      <p>Location: <%= @hotel.location.name %>, <%= @hotel.location.region %> <%= link_to '(map)',
-        "https://www.google.com.ua/maps/place/#{@hotel.location.name}, #{@hotel.address}", target: :_blank %></p>
+        <textarea class="form-control w-50 p-3" style="font-size:20px;height:250px;" id="exampleFormControlTextarea1" rows="2" readonly><%= @hotel.description %></textarea>
+    </div>
+
+    <blockquote class="blockquote mb-0" style="margin:10px">
+      <h5>Адресс: <%= @hotel.address %></h5>
+      <h5>Контакты: <%= @hotel.contacts %></h5>
+      <h5>Локация: <%= @hotel.location.name %>, <%= @hotel.location.region %> <%= link_to '(карта)',
+        "https://www.google.com.ua/maps/place/#{@hotel.location.name}, #{@hotel.address}", target: :_blank %></h5>
 
     </blockquote>
     <% if current_user.id == @hotel.user_id %>
       <hotel-free-act :status_in="<%= @hotel.free %>" :hotel_id="<%= @hotel.id %>"></hotel-free-act>
     <% else %>
       <% if @hotel.free %>
-      <p class="p-3 mb-2 bg-success text-white" style="width:50px">Free</p>
+      <p class="p-3 mb-2 bg-success text-white" style="width:90px">Свободно</p>
       <% else %>
-      <p class="p-3 mb-2 bg-danger text-white" style="width:60px">Busy</p>
+      <p class="p-3 mb-2 bg-danger text-white" style="width:90px">Занято</p>
       <% end %>
     <% end %>
     <% result_owner = owner_exists(@hotel.user_id) %>
     <% if result_owner %>
-    <p>Owner: <%= link_to result_owner.username, user_show_path(result_owner) %></p>
+    <h5>Владелец: <%= link_to result_owner.username, user_show_path(result_owner) %></h5>
     <% end %>
-    <p>Created: <%= @hotel.updated_at.to_date %></p>
+    <h5>Обновлен: <%= @hotel.updated_at.to_date %></h5>
   </div>
 </div>
 
 <hr>
-<h2 class="text-center">Photos:</h2>
+<h2 class="text-center">Фотографии:</h2>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <% @hotel.image_hotels.each do |imag| %>

@@ -1,4 +1,7 @@
-<%= link_to '<- Back', :back, class: 'btn btn-light' %>
+<%= link_to image_tag('back_button', alt: 'back', style: 'height:40px'), :back %>
+<%= link_to 'Как добавить мой отель?', hotel_info_path, class: 'float-right btn btn-link' %>
+<h1 class="text-center">Отели
+</h1>
 <hr>
   <% if @location %>
     <filter-hotels :region_in="'<%= @location.region %>'" :location_in="<%= @location.id %>"></filter-hotels>
@@ -11,7 +14,7 @@
     <%= render @hotels %>
   </div>
 <% else %>
-  <h3 class="text-center text-warning">There are not any hotels in this town.</h3>
+  <h3 class="text-center text-warning">Нет ни одного отеля по этой локации.</h3>
 <% end %>
 <div class="text-center">
   <%= will_paginate @tours, renderer: BootstrapPagination::Rails %>

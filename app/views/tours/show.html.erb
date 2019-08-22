@@ -1,6 +1,5 @@
-<%= link_to '<- Tours', tours_path, class: 'btn btn-light' %>
-<%= link_to 'Find hotel by location', hotels_path(location_id: @tour.location.id), class: 'btn btn-info float-right', style: 'margin: 0 10px 0 0' %>
-<h2 class="text-center">Tour</h2>
+<%= link_to image_tag('back_button', alt: 'back', style: 'height:40px;margin:20px'), tours_path %>
+<%= link_to 'Найти отель по локации', hotels_path(location_id: @tour.location.id), class: 'btn btn-info float-right', style: 'margin: 20px' %>
 <div class="card">
   <div class="card-header">
     <h3 class="text-primary"><%= @tour.name %>
@@ -8,18 +7,24 @@
     </h3>
   </div>
   <div class="card-body">
-    <%= image_tag(Tour.main_image(@tour.image_id).image, alt: 'Image',
-        style: 'height:250px;border-radius:5px;margin:10px') if @tour.image_id? %>
-    <p class="text-info"><%= @tour.description %></p>
-    <blockquote class="blockquote mb-0">
-      <p>Location: <%= @tour.location.name %>, <%= @tour.location.region %> <%= link_to '(on map)',
-        "https://www.google.com.ua/maps/place/#{@tour.location.name}", target: :_blank %></p>
-      <p>Number of savings: <%= @num_of_savings %></p>
-      <p>Updated: <%= @tour.updated_at.to_date %></p>
+    <div class="form-inline">
+      <%= image_tag(Tour.main_image(@tour.image_id).image, alt: 'Image',
+      style: 'height:250px;border-radius:5px;margin:10px;float:left') if @tour.image_id? %>
+
+        <textarea class="form-control w-50 p-3" style="font-size:20px;height:250px;" id="exampleFormControlTextarea1" rows="2" readonly><%= @tour.description %></textarea>
+    </div>
+    <saving-tour :user_id="<%= current_user.id %>" :tour_id="<%= @tour.id %>"
+      :is_saved="<%= is_saved?(@tour) %>"></saving-tour>
+
+    <blockquote class="blockquote mb-0" style="margin:10px">
+      <h4>Локация: <%= @tour.location.name %>, <%= @tour.location.region %> <%= link_to '(на карте)',
+        "https://www.google.com.ua/maps/place/#{@tour.location.name}", target: :_blank %></h4>
+      <h4>Количество сохранений: <%= @num_of_savings %></h4>
+      <h4>Обновлен: <%= @tour.updated_at.to_date %></h4>
     </blockquote>
     <% result_creator = creator_exists(@tour.creator_id) %>
     <% if result_creator %>
-    <p>Author: <%= link_to result_creator.username, user_show_path(result_creator) %></p>
+    <h4>Автор: <%= link_to result_creator.username, user_show_path(result_creator) %></h4>
     <% end %>
   </div>
 </div>
@@ -27,23 +32,25 @@
 <p></p>
 <div class="card">
   <div class="card-header">
-    Weather
+    <h4>
+      Погода
+    </h4>
   </div>
   <div class="card-body">
 
     <blockquote class="blockquote mb-0">
-      <p>Temperature: <%= @weather['temperature'] %> &#176;C</p>
-      <p>Humidity: <%= @weather['humidity'] %>%</p>
-      <footer class="blockquote-footer">Для ленивой породы никогда нет доброй погоды.</footer>
+      <h5>Температура: <%= @weather['temperature'] %> &#176;C</h5>
+      <h5>Влажность: <%= @weather['humidity'] %>%</h5>
+      <footer class="blockquote-footer"><p style="font-size:15px">Для ленивой породы никогда нет доброй погоды.</p></footer>
     </blockquote>
   </div>
 </div>
 
 
-<h4>Comments: </h4>
+<h4>Комментарии: </h4>
 <adding-comment :in_tour_id="<%= @tour.id %>"></adding-comment>
 
-<h2 class="text-center">Photos:</h2>
+<h2 class="text-center" style="margin:50px">Фотографии:</h2>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <% @tour.images.each do |imag| %>

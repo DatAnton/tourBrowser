@@ -11,9 +11,9 @@
 
       </ul>
     <form class="form-inline">
-      <textarea class="form-control w-75 p-3" placeholder="Your comment..." id="exampleFormControlTextarea1" rows="2" v-model="comment.body"></textarea>
+      <textarea class="form-control w-75 p-3" placeholder="Ваш комментарий..." id="exampleFormControlTextarea1" rows="2" v-model="comment.body"></textarea>
       &nbsp;&nbsp;&nbsp;
-      <button type="button" @click="addComment" class="btn btn-primary mb-2">Add</button>
+      <button type="button" @click="addComment" class="btn btn-primary mb-2">Добавить</button>
     </form>
   </div>
 </template>

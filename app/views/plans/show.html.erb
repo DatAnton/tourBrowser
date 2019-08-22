@@ -1,20 +1,20 @@
-<%= link_to '<- Plans', plans_path, class: 'btn btn-light' %>
+<%= link_to image_tag('back_button', alt: 'back', style: 'height:40px;margin:15px'), plans_path %>
 
 <edit-plan :plan_in_id="<%= @plan.id %>" :plan_in_name="'<%= @plan.name %>'"></edit-plan>
 
 <% if @plan.plan_points.empty? %>
-  <h4 class="text text-center text-warning">You don't have any points. Add them!</h4>
+  <h4 class="text text-center text-warning" style="margin: 20px">Вы не имеете никаких туров. Добавьте их!</h4>
 <% else %>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Tour</th>
-        <th scope="col">Date</th>
-        <th scope="col">Time from</th>
-        <th scope="col">Time to</th>
-        <th scope="col">Location</th>
-        <th scope="col">Act</th>
+        <th scope="col">Фото</th>
+        <th scope="col">Тур</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Время с</th>
+        <th scope="col">Время по</th>
+        <th scope="col">Локация</th>
+        <th scope="col">Действия</th>
       </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
           <td><%= pp.from_time.to_s(:time) %></td>
           <td><%= pp.to_time.to_s(:time) %></td>
           <td><%= pp.tour.location.name %>, <%= pp.tour.location.region %></td>
-          <td><%= link_to 'remove', plan_plan_point_path(@plan, pp), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger' %></td>
+          <td><%= link_to 'удалить', plan_plan_point_path(@plan, pp), method: :delete, data: { confirm: "Вы уверенны?" }, class: 'btn btn-danger' %></td>
       </tr>
       <% end %>
     </tbody>
@@ -35,5 +35,5 @@
 <% end %>
 
 <div class="text text-center">
-  <%= link_to 'Add plan point', new_plan_plan_point_path(@plan), class: "btn btn-primary btn-lg btn-block" %>
+  <%= link_to 'Добавить тур', new_plan_plan_point_path(@plan), class: "btn btn-primary btn-lg btn-block" %>
 </div>

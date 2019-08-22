@@ -3,12 +3,12 @@
   <div class="card-body">
     <h3 class="card-title"><%= link_to tour.name, tour %></h3>
     <div class="card-text">
-      <i>Location:</i> <u><%= tour.location.name %>, <%= tour.location.region %></u><br>
+      <i>Локация:</i> <u><%= tour.location.name %>, <%= tour.location.region %></u><br>
       <% if controller.controller_name == 'users' && controller.action_name == 'profile' %>
         <% if tour.is_private %>
-          <h5 class="text-danger">Private</h5>
+          <h5 class="text-danger">Приватный</h5>
         <% else %>
-          <h5 class="text-success">Public</h5>
+          <h5 class="text-success">Публичный</h5>
         <% end %>
       <% end %>
       <br>
@@ -18,11 +18,11 @@
     </div>
   </div>
   <div class="card-footer">
-    <small class="text-muted">Last updated <%= ((Time.now - tour.updated_at) / 24.hours).to_i %> days ago</small>
+    <small class="text-muted">Создан <%= ((Time.now - tour.created_at) / 24.hours).to_i %> дней назад</small>
     <% result_creator = creator_exists(tour.creator_id) %>
     <% if result_creator %>
     <p style="float:right">
-        by: <%= link_to result_creator.username, user_show_path(result_creator) %>
+        <%= link_to result_creator.username, user_show_path(result_creator) %>
     </p>
     <% end %>
 

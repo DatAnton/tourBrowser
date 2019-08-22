@@ -10,19 +10,19 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">Edit plan name</h5>
+              <h5 class="modal-title" id="exampleModalCenterTitle">Редактировать имя</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Name" v-model="plan.name">
+              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Имя" v-model="plan.name">
               <br><br>
-              <button type="button" name="button" @click="destroyPlan" class="btn btn-danger" data-confirm="Are you sure to delete this plan?">Destroy</button>
+              <button type="button" name="button" @click="destroyPlan" class="btn btn-danger" data-confirm="Are you sure to delete this plan?">Удалить</button>
             </div>
 
             <div class="modal-footer">
-              <button type="button" @click="editName" class="btn btn-primary" data-dismiss="modal">Edit</button>
+              <button type="button" @click="editName" class="btn btn-primary" data-dismiss="modal">Редактировать</button>
             </div>
           </div>
         </div>

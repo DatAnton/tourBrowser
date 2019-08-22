@@ -1,7 +1,7 @@
 <template>
   <div>
     <input type="checkbox" v-model="free">
-    <label for="horns">Do you have a free places?</label><br>
+    <label for="horns">Вы имеете свободные места?</label><br>
   </div>
 </template>
 

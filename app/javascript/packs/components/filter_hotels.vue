@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="form-row align-items-center">
-        &nbsp;&nbsp;&nbsp;<i>Filters:</i>
+        &nbsp;&nbsp;&nbsp;<i>Фильтры:</i>
           <div class="col-auto my-1">
             <select v-model="selectedRegion" class="form-control" id="exampleFormControlSelect1">
               <option v-for="reg in regions">{{ reg }}</option>
@@ -14,8 +14,8 @@
           </div>
 
           <div class="col-auto my-1">
-            <button type="button" name="button" class="btn btn-success" @click="findHotels">Find</button>
-            <button type="button" name="button" class="btn btn-light" @click="clearFilters">Clear filters</button>
+            <button type="button" name="button" class="btn btn-success" @click="findHotels">Найти</button>
+            <button type="button" name="button" class="btn btn-light" @click="clearFilters">Очистить фильтры</button>
           </div>
 
         </div>

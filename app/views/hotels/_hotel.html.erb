@@ -5,6 +5,6 @@
       <p class="card-text"><%= hotel.location.name %>, <%= hotel.location.region %> | <%= hotel.address %><br>
         <%= hotel.contacts %>
       </p>
-      <p class="card-text"><small class="text-muted">Owner: <%= link_to hotel.user.username, user_show_path(hotel.user) %></small></p>
+      <h5 class="card-text">Владелец: <%= link_to hotel.user.username, user_show_path(hotel.user) %></h5>
     </div>
   </div>

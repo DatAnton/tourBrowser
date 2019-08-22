@@ -1,17 +1,18 @@
-<h2 class="text-center">Profile</h2>
 
 <div class="card">
   <div class="card-header">
     <h3 class="text-primary">&nbsp;&nbsp;<%= @user.username %></h3>
-    <h5 class="text-secondary">&nbsp;&nbsp;&nbsp;&nbsp;<%= @user.email %></h5>
+    <h4 class="text-secondary">&nbsp;&nbsp;<%= @user.email %></h4>
   </div>
   <div class="card-body">
-    <%= image_tag @user.avatar.url, alt: 'avatar', style: 'weight:200px;height:200px;border-radius:5px;margin:10px'%><br>
-    <p class="text-info"><%= @user.description %></p>
-    <blockquote class="blockquote mb-0">
-      <p>Number of tours: <%= @user_tours.length %></p>
-      <p>Number of plans: <%= @num_of_plans %></p>
-      <p>Count of hotels: <%= @user.count_of_hotels %></p>
+    <div class="form-inline">
+        <%= image_tag @user.avatar.url, alt: 'avatar', style: 'weight:200px;height:200px;border-radius:5px;margin:10px;float:left'%>
+        <textarea class="form-control w-50 p-3" style="font-size:20px;height:200px;" id="exampleFormControlTextarea1" rows="2" readonly><%= @user.description %></textarea>
+    </div>
+    <blockquote class="blockquote mb-0" style="margin:10px">
+      <h4>Количество туров: <span class="text-light bg-dark"><%= @user_tours.length %></span></h4>
+      <h4>Количество планов: <span class="text-light bg-dark"><%= @num_of_plans %></span></h4>
+      <h4>Количество отелей: <span class="text-light bg-dark"><%= @user.count_of_hotels %></span></h4>
     </blockquote>
   </div>
 </div>
@@ -19,7 +20,7 @@
 
 <% if @user_tours.length != 0 %>
 <hr>
-  <h3 class="text text-center">My tours</h3>
+  <h3 class="text text-center" style="margin: 20px">Мои туры</h3>
   <div class="card-columns">
     <%= render @user_tours %>
   </div>

@@ -3,7 +3,7 @@
     <hr>
     <form>
       <div class="form-row align-items-center">
-        &nbsp;&nbsp;&nbsp;<i>Filters:</i>
+        &nbsp;&nbsp;&nbsp;<i>Фильтры:</i>
         <div class="col-auto my-1">
           <select v-model="selectedRegion" class="form-control" id="exampleFormControlSelect1">
             <option v-for="reg in regions">{{ reg }}</option>
@@ -16,21 +16,21 @@
         </div>
         <div class="col-auto my-1">
           <input type="checkbox" v-model="sortBySavings">
-          <label for="horns">Sort by rating</label>
+          <label for="horns">Сортировать по рейтингу?</label>
         </div>
 
         <div class="col-auto my-1">
-          <a v-bind:href="filterString" class="btn btn-success">Find</a>
-          <a v-bind:href="searchHotel" class="btn btn-primary">Find hotel by location</a>
-          <button type="button" class="btn btn-light" @click="clearFilters">Clear filters</button>
+          <a v-bind:href="filterString" class="btn btn-success">Найти</a>
+          
+          <button type="button" class="btn btn-light" @click="clearFilters">Очистить фильтры</button>
         </div>
       </div><br>
     </form>
     <form class="form-inline">
       <div class="form-group mx-sm-3 mb-2">
-        <i>Search by name:</i>
-        <input type="text" class="form-control" placeholder="Tour's name" v-model="searchingString">
-        <button type="button" class="btn btn-info" @click="sendSearchString">Search</button>
+        <i>Поиск по имени:</i>
+        <input type="text" class="form-control" placeholder="Имя тура" v-model="searchingString">
+        <button type="button" class="btn btn-info" @click="sendSearchString">Поиск</button>
       </div>
 
     </form>

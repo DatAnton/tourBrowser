@@ -7,37 +7,68 @@
 
      <form>
        <div class="form-group">
-         <label for="">Day:</label>
-         <input type="date" name="" class="form-control" value="" v-model="planPoint.day_date">
-       </div>
-
-       <div class="row">
-         <div class="col">
-           <label for="">From</label>
-           <input type="time" name="" class="form-control" value="" v-model="planPoint.from_time">
-         </div>
-         <div class="col">
-           <label for="">To</label>
-            <input type="time" class="form-control" name="" value="" v-model="planPoint.to_time">
-
-          </div>
-        </div>
-
-       <div class="" v-if="selectedTour != 0">
-         <h4>Chosen tour: </h4>
-           <div class="card" style="width: 18rem; margin:20px">
-             <img v-bind:src="selectedTour.image.picture" alt="image" class="card-img-top">
-             <div class="card-body">
-               <h4>{{ selectedTour.name  }}</h4>
-               <p class="card-text">{{ selectedTour.location.name }}, {{ selectedTour.location.region }}</p>
-             </div>
+         <div class="container-fluid page">
+            <div class="row">
+                <div class="offset-4 col-6">
+                   <label for="">Дата</label>
+                   <input type="date" name="" class="form-control" value="" v-model="planPoint.day_date" placeholder="дд-мм-гггг">
+                </div>
+              </div>
             </div>
-       </div>
+          </div>
 
-      <br>
-      <button type="button" style="margin:10px" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
-        Choose tour
-      </button>
+          <div class="form-group">
+            <div class="container-fluid page">
+               <div class="row">
+                   <div class="offset-4 col-6">
+                     <label for="">Время с</label>
+                     <input type="time" name="" class="form-control" value="" v-model="planPoint.from_time" placeholder="чч:мм">
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <div class="form-group">
+               <div class="container-fluid page">
+                  <div class="row">
+                      <div class="offset-4 col-6">
+                       <label for="">Время по</label>
+                        <input type="time" class="form-control" name="" value="" v-model="planPoint.to_time" placeholder="чч:мм">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="container-fluid page">
+                     <div class="row">
+                         <div class="offset-4 col-6">
+                           <div class="" v-if="selectedTour != 0">
+                             <h4>Выбранный тур: </h4>
+                               <div class="card" style="width: 18rem; margin:20px">
+                                 <img v-bind:src="selectedTour.image.picture" alt="image" class="card-img-top">
+                                 <div class="card-body">
+                                   <h4>{{ selectedTour.name  }}</h4>
+                                   <p class="card-text">{{ selectedTour.location.name }}, {{ selectedTour.location.region }}</p>
+                                 </div>
+                                </div>
+                              </div>
+                        </div>
+                       </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="container-fluid page">
+                       <div class="row">
+                           <div class="offset-4 col-6">
+                              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                                Выбрать тур
+                              </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
       <!-- MODAL -->
 
@@ -45,27 +76,36 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">Choose tour</h5>
+              <h5 class="modal-title" id="exampleModalCenterTitle">Выберите тур</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <div class="" v-for="tour in tours">
+              <div class="" v-for="tour in tours" style="margin:10px">
                 <input type="radio" v-bind:value="tour" v-model="selectedTour">
-                <label>{{ tour.name }} <br> <img v-bind:src="tour.image.picture" alt="Image" style="height:75px;"> </label>
+                <label style="font-size:20px">{{ tour.name }} <br> <img v-bind:src="tour.image.picture" alt="Image" style="height:75px;border-radius:5px"> </label>
                 <br>
               </div>
             </div>
 
             <div class="modal-footer">
-              <button type="button" @click="chosingTour" class="btn btn-primary" data-dismiss="modal">Ok</button>
+              <button type="button" @click="chosingTour" class="btn btn-primary" data-dismiss="modal">Ок</button>
             </div>
           </div>
         </div>
       </div>
-      <br><br>
-      <button type="button" style="margin:10px" name="button" class="btn btn-primary" @click="sendData">Save</button>
+
+
+      <div class="form-group">
+        <div class="container-fluid page">
+           <div class="row">
+               <div class="offset-4 col-6">
+                 <button type="button" name="button" class="btn btn-primary btn-lg" @click="sendData">Сохранить</button>
+               </div>
+             </div>
+           </div>
+          </div>
      </form>
   </div>
 </template>

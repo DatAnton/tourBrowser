@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button v-if="save_active" class="btn btn-primary" type="button" name="button" @click="saveTour">save</button>
-    <button v-else class="btn btn-danger" type="button" name="button" @click="deleteTour">remove</button>
+    <button v-if="save_active" class="btn btn-primary" type="button" name="button" @click="saveTour">сохранить</button>
+    <button v-else class="btn btn-danger" type="button" name="button" @click="deleteTour">удалить</button>
   </div>
 </template>
 

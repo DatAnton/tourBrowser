@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     @user_tours.each do |tour|
       tour.update_attribute(:creator_id, 0)
     end
-    
+
     @user.destroy
     redirect_to root_path
   end

@@ -1,8 +1,8 @@
-<h2 class="text-center">Your plans</h2>
+<h2 class="text-center" style="margin: 40px">Мои планы</h2>
 
   <ul class="list-group">
     <% @plans.each do |plan| %>
-      <li class="list-group-item text-center">
+      <li class="list-group-item text-center"  style="font-size:20px">
         <%= link_to plan.name, plan %>
         <span class="badge badge-primary badge-pill"><%= plan.plan_points.length %></span>
       </li>

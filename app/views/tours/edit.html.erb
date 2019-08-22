@@ -1,6 +1,7 @@
-<h2 class="text-center">Edit tour</h2>
-<%= link_to 'destroy tour', @tour, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger', style: 'margin: 10px' if current_user.id == @tour.creator_id %>
-
+<%=  link_to image_tag('back_button', alt: 'back', style: 'height:40px;margin:0 0 0 10px'), @tour %>
+<h2 class="text-center" style="margin:50px 0 50px 0">Редактировать тур
+<%= link_to 'удалить', @tour, method: :delete, data: { confirm: "Вы уверенны?" }, class: 'btn btn-danger', style: 'margin: 10px' if current_user.id == @tour.creator_id %>
+</h2>
 <form-edit-tour :tour_in="<%= @tour.to_json %>"
   :location_in="<%= @tour.location.to_json %>"
   :main_image_in="<%= Tour.main_image(@tour.image_id).to_json %>"

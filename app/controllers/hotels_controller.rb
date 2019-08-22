@@ -39,21 +39,25 @@ class HotelsController < ApplicationController
   end
 
   def create
-    @hotel = Hotel.new(hotel_params)
-    @hotel.user_id = current_user.id
-
-    if @hotel.save
-      @main_image = ImageHotel.new(image: params[:main_image], hotel_id: @hotel.id)
-      @main_image.save
-      @hotel.update_attribute(:image_id, @main_image.id)
-
-      @images = params[:images]
-      @images.each do |img|
-        ImageHotel.create(image: img, hotel_id: @hotel.id)
-      end
-      render json: @hotel
+    if current_user.count_of_hotels - current_user.hotels.length == 0
+      render json: { errors: ["Вы не можете создать отель! Перечислите деньги!"] }
     else
-      render json: { errors: @hotel.errors.full_messages }
+      @hotel = Hotel.new(hotel_params)
+      @hotel.user_id = current_user.id
+
+      if @hotel.save
+        @main_image = ImageHotel.new(image: params[:main_image], hotel_id: @hotel.id)
+        @main_image.save
+        @hotel.update_attribute(:image_id, @main_image.id)
+
+        @images = params[:images]
+        @images.each do |img|
+          ImageHotel.create(image: img, hotel_id: @hotel.id)
+        end
+        render json: @hotel
+      else
+        render json: { errors: @hotel.errors.full_messages }
+      end
     end
 
   end

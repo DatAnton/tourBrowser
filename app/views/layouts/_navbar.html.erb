@@ -1,9 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <%= image_tag 'logo.jpg', style: 'width: 60px;border-radius:5px;' %>
-  <%= link_to 'TourBrowser', root_path, class: "navbar-brand" %>
+  <%= link_to 'Tour Browser', root_path, class: "navbar-brand text-primary", style: "font-size:23px" %>
 <div class="collapse navbar-collapse" id="navbarNavDropdown">
 <% active_page = controller.controller_name %>
-  <ul class="navbar-nav">
+  <ul class="navbar-nav" style="width: 100%;">
+    <% if active_page == 'static_pages' && controller.action_name == 'about' %>
+      <li class="nav-item active">
+    <% else %>
+      <li class="nav-item">
+    <% end %>
+      
+      <%= link_to 'Обо мне', about_page_path, class: "nav-link", style: 'font-size:17px;margin-left:20px' %>
+      </li>
 
     <% if user_signed_in? %>
       <% if current_user.admin %>
@@ -12,7 +20,7 @@
         <% else %>
           <li class="nav-item">
         <% end %>
-          <%= link_to 'Editing user', edit_count_of_hotels_path, class: 'nav-link' %>
+          <%= link_to 'Пользователи', edit_count_of_hotels_path, class: 'nav-link', style: "font-size:20px" %>
         </li>
       <% end %>
 
@@ -22,16 +30,16 @@
         <% else %>
           <li class="nav-item">
         <% end %>
-          <%= link_to 'My hotels', hotels_of_user_path, class: 'nav-link' %>
+          <%= link_to 'Мои отели', hotels_of_user_path, class: 'nav-link', style: "font-size:20px;" %>
         </li>
       <% end %>
 
-      <% if active_page == 'hotels' && controller.action_name == 'index' || controller.action_name == 'show' %>
+      <% if active_page == 'hotels' && (controller.action_name == 'index' || controller.action_name == 'show') %>
         <li class="nav-item active">
       <% else %>
         <li class="nav-item">
       <% end %>
-        <%= link_to 'Look for hotels', hotels_path, class: 'nav-link' %>
+        <%= link_to 'Отели', hotels_path, class: 'nav-link', style: "font-size:20px" %>
       </li>
 
 
@@ -40,7 +48,7 @@
       <% else %>
         <li class="nav-item">
       <% end %>
-        <%= link_to 'Plans', plans_path, class: 'nav-link' %>
+        <%= link_to 'Планы', plans_path, class: 'nav-link', style: "font-size:20px" %>
       </li>
 
 
@@ -50,51 +58,46 @@
       <% else %>
         <li class="nav-item dropdown">
       <% end %>
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Tours
+          <a class="nav-link dropdown-toggle " style="font-size:20px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Туры
           </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <%= link_to 'New tour', new_tour_path, class: 'dropdown-item' %>
-          <%= link_to 'All tours', tours_path, class: 'dropdown-item' %>
-          <%= link_to 'Saved tours', saved_tours_path, class: 'dropdown-item' %>
+          <%= link_to 'Новый тур', new_tour_path, class: 'dropdown-item' %>
+          <%= link_to 'Все туры', tours_path, class: 'dropdown-item' %>
+          <%= link_to 'Сохраненные туры', saved_tours_path, class: 'dropdown-item' %>
         </div>
       </li>
 
-      <li class="nav-item">
-        <a href="#" class="nav-link">|</a>
-      </li>
-    <% end %>
+    <% elsif active_page != 'static_pages' %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-inline pull-right", style: "margin-right: 0; margin-left: auto;"}) do |f| %>
+      <div class=""  >
 
-    <% if active_page == 'static_pages' && controller.action_name == 'hotel_info' %>
-      <li class="nav-item active">
-    <% else %>
-      <li class="nav-item">
-    <% end %>
-      <%= link_to 'Info about hotel', hotel_info_path, class: 'nav-link' %>
-    </li>
-    <% if active_page == 'static_pages' && controller.action_name == 'about' %>
-      <li class="nav-item active">
-    <% else %>
-      <li class="nav-item">
-    <% end %>
-      <%= link_to 'About us', about_page_path, class: 'nav-link' %>
-    </li>
+        <div class="form-group mb-2">
+          <%= f.email_field :email, class: "form-control", id: "exampleInputEmail1", placeholder: "Введите email", autofocus: true, autocomplete: "email", style: "width:200px" %>
+        </div>
 
+        <div class="form-group mb-2">
+          <%= f.password_field :password, class:"form-control", id: "exampleInputPassword1", placeholder: "Введите пароль", autocomplete: "current-password", style: "width:200px" %>
+        </div>
+
+        <%= f.submit "Войти", class: "btn btn-primary mb-2" %>
+        <%= link_to 'Регистрация', new_user_registration_path, class: 'btn btn-success mb-2' %>
+
+      </div>
+      <% end %>
+    <% end %>
   </ul>
 </div>
   <p class="navbar-text pull-right">
   <% if user_signed_in? %>
     <% if is_opp_hotels? %>
-      <%= link_to 'Register my hotel', new_hotel_path, class: 'btn btn-success text-white' %>
+      <%= link_to 'Зарегистрировать мой отель', new_hotel_path, class: 'btn btn-success text-white' %>
     <% end %>
 
     <%= link_to (image_tag(current_user.avatar.url, alt: 'Image',
               style: 'height:30px;border-radius:5px; margin:0 15px 0 0') if current_user.avatar?), root_path %>
-    <%= link_to 'Edit profile', edit_user_registration_path, class: 'navbar-link' %> |
-    <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'navbar-link'  %>
-  <% else %>
-    <%= link_to 'Sign up', new_user_registration_path, class: 'navbar-link'  %> |
-    <%= link_to 'Login', new_user_session_path, class: 'navbar-link'  %>
+    <%= link_to image_tag('edit.png', alt: 'edit', style: 'height:25px'), edit_user_registration_path, class: 'navbar-link' %> |
+    <%= link_to image_tag('sign_out.png', alt: 'edit', style: 'height:25px'), destroy_user_session_path, method: :delete, class: 'navbar-link'  %>
   <% end %>
   </p>
 </nav>
